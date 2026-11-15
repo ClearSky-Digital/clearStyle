@@ -1,0 +1,21 @@
+# Build output
+/dist/
+
+# Composer dev tools (install with: composer install)
+/vendor/
+
+# Editors and systems
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Python caches from the helper scripts
+__pycache__/
+*.pyc
+
+# Local test output
+/tests/output/
+/tests/shots/
+.phpcs-cache

@@ -1,0 +1,672 @@
+/* CSD Site Styles: neutral demo stylesheet.
+
+   HOW TO USE
+   1. Open Settings, CSD Site Styles in WordPress, choose this file (or paste its text) and press Save CSS.
+   2. Look at the gallery under the form. Every block style and pattern the plugin registers is drawn with this file.
+   3. Copy the file, change the values in section 0 below, and save it again. That is all most sites need.
+
+   WHAT THIS FILE COVERS
+   All 24 block styles (class is-style-csd-NAME), the 8 patterns, and the core blocks inside them (headings, paragraphs, links,
+   lists, quotes, buttons, separators, tables, columns, images).
+
+   RULES FROM THE PLUGIN (see the README)
+   - The plugin prints this file only on pages whose content uses the class csd-page, and in the block editor. Every rule here
+     starts with .csd-page, so nothing reaches the rest of your site.
+   - No @import, no url() except data:image/... and #fragment addresses, no less-than sign (even in a comment), 256 KB at most.
+   - The plugin loads no fonts. The font stacks below are system fonts, so nothing needs to be installed. To use a web font, load it
+     in your theme and put its name first in --csd-font-body or --csd-font-head.
+
+   COLOR CONTRAST
+   Text and background pairs in this file are chosen for at least 4.5 to 1 (WCAG AA). If you change a color, check the pair again.
+   Photo bands and photo tiles put white text over a dark layer that stays dark even over a white photo. */
+
+
+/* 0. Settings. Change these values first. */
+.csd-page {
+	/* Colors for light areas */
+	--csd-ink: #1f2933;          /* body text on light backgrounds */
+	--csd-muted: #4a5663;        /* quiet text, citations */
+	--csd-paper: #ffffff;        /* page and card background */
+	--csd-mist: #f1f4f7;         /* soft background for panels, table headers, plain cards */
+	--csd-line: #d3dae1;         /* thin borders */
+	--csd-accent: #235a9f;       /* buttons, rules, markers (white text on it passes AA) */
+	--csd-accent-hover: #1b4880; /* button color while the pointer is over it */
+	--csd-link-light: #1b4f91;   /* links on light backgrounds */
+
+	/* Colors for dark areas (hero, accent band, feature band, photo bands) */
+	--csd-night: #17222d;        /* hero start */
+	--csd-night-2: #223548;      /* hero end */
+	--csd-deep: #1d4a80;         /* accent band */
+	--csd-slate: #2b3a4a;        /* feature band start */
+	--csd-slate-2: #3a4d62;      /* feature band end */
+	--csd-on-dark: #ffffff;      /* text on dark areas */
+	--csd-link-dark: #cfe3fb;    /* links on dark areas */
+	--csd-label-dark: #e1edfb;   /* small section labels on dark areas */
+	--csd-shade: rgba(15, 23, 32, 0.66); /* the dark layer over photos */
+
+	/* Fonts: system stacks, nothing to download */
+	--csd-font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	--csd-font-head: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	--csd-font-quote: Georgia, "Times New Roman", serif;
+
+	/* Size and shape */
+	--csd-width: 1100px;         /* widest content column */
+	--csd-space: 72px;           /* space above and below a band */
+	--csd-gap: 24px;             /* space between cards, panels and columns */
+	--csd-radius: 10px;          /* rounded corners */
+}
+
+
+/* 1. Working colors. Light areas set them first, dark areas and boxes change them, and every rule below reads them. */
+.csd-page,
+.csd-page .is-style-csd-light,
+.csd-page .is-style-csd-card,
+.csd-page .is-style-csd-placeholder,
+.csd-page .is-style-csd-facts,
+.csd-page .is-style-csd-listing {
+	--csd-fg: var(--csd-ink);
+	--csd-fg-soft: var(--csd-muted);
+	--csd-label: var(--csd-accent);
+	--csd-link: var(--csd-link-light);
+	--csd-rule: var(--csd-accent);
+	--csd-tint: rgba(35, 90, 159, 0.08);
+	--csd-edge: rgba(31, 41, 51, 0.16);
+	--csd-btn-bg: var(--csd-accent);
+	--csd-btn-fg: #ffffff;
+	--csd-btn-hover: var(--csd-accent-hover);
+	--csd-focus: var(--csd-accent);
+}
+
+.csd-page .is-style-csd-hero,
+.csd-page .is-style-csd-dark,
+.csd-page .is-style-csd-feature,
+.csd-page .is-style-csd-photo-band,
+.csd-page .is-style-csd-photo-tile {
+	--csd-fg: var(--csd-on-dark);
+	--csd-fg-soft: #dbe5ef;
+	--csd-label: var(--csd-label-dark);
+	--csd-link: var(--csd-link-dark);
+	--csd-rule: var(--csd-label-dark);
+	--csd-tint: rgba(255, 255, 255, 0.12);
+	--csd-edge: rgba(255, 255, 255, 0.3);
+	--csd-btn-bg: #ffffff;
+	--csd-btn-fg: #17324f;
+	--csd-btn-hover: #e3edf8;
+	--csd-focus: #ffffff;
+}
+
+
+/* 2. Page root and the full-width option.
+   A page group that carries the class csd-page--bleed is meant to be set to Align: Full width. Most block themes honor that on their own. */
+.csd-page {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: var(--csd-font-body);
+	font-size: 17px;
+	font-weight: 400;
+	line-height: 1.65;
+	color: var(--csd-fg);
+	background-color: var(--csd-paper);
+	overflow-wrap: break-word;
+}
+
+.csd-page *,
+.csd-page *::before,
+.csd-page *::after {
+	box-sizing: border-box;
+}
+
+.csd-page.csd-page--bleed {
+	max-width: none;
+}
+
+/* The block gap WordPress adds between blocks is removed inside the page, so bands sit flush. Spacing is set below. */
+.csd-page[class*="is-layout-"] > *,
+.csd-page [class*="is-layout-"] > * {
+	margin-block-start: 0;
+}
+
+.csd-page .wp-block-group__inner-container {
+	display: contents;
+}
+
+
+/* 3. Bands: Hero, Plain band (light), Accent band (dark), Feature band */
+.csd-page .is-style-csd-hero,
+.csd-page .is-style-csd-light,
+.csd-page .is-style-csd-dark,
+.csd-page .is-style-csd-feature {
+	position: relative;
+	margin: 0;
+	padding: var(--csd-space) 0;
+	color: var(--csd-fg);
+}
+
+.csd-page .is-style-csd-hero {
+	display: flex;
+	align-items: center;
+	min-height: 440px;
+	background-image: linear-gradient(135deg, var(--csd-night) 0%, var(--csd-night-2) 100%);
+}
+
+.csd-page .is-style-csd-hero > * {
+	width: 100%;
+}
+
+.csd-page .is-style-csd-light {
+	background-color: var(--csd-paper);
+}
+
+.csd-page .is-style-csd-dark {
+	background-color: var(--csd-deep);
+}
+
+.csd-page .is-style-csd-feature {
+	background-image: linear-gradient(135deg, var(--csd-slate) 0%, var(--csd-slate-2) 100%);
+}
+
+/* Content column: keeps text at a readable width inside a full-width band */
+.csd-page .is-style-csd-column {
+	position: relative;
+	width: 100%;
+	max-width: var(--csd-width);
+	margin: 0 auto;
+	padding: 0 var(--csd-gap);
+}
+
+.csd-page .is-style-csd-hero .is-style-csd-column {
+	max-width: 820px;
+	margin-left: max(0px, calc((100% - var(--csd-width)) / 2));
+}
+
+
+/* 4. Headings. In the patterns, the H2 is a small section label and the H3 under it is the subtitle. */
+.csd-page h1,
+.csd-page h2,
+.csd-page h3,
+.csd-page h4 {
+	margin: 0 0 16px;
+	font-family: var(--csd-font-head);
+	color: var(--csd-fg);
+	line-height: 1.2;
+}
+
+.csd-page h1 {
+	font-size: clamp(2rem, 5.5vw, 3.1rem);
+	font-weight: 700;
+	letter-spacing: -0.01em;
+}
+
+.csd-page h2 {
+	margin-bottom: 8px;
+	font-size: 0.95rem;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--csd-label);
+}
+
+.csd-page h3 {
+	font-size: clamp(1.5rem, 3.6vw, 2.1rem);
+	font-weight: 600;
+}
+
+.csd-page h4 {
+	font-size: 1.2rem;
+	font-weight: 600;
+}
+
+/* Subtitle: an H2 that reads as a large subtitle instead of a small label */
+.csd-page h2.is-style-csd-subtitle {
+	margin-bottom: 16px;
+	font-size: clamp(1.4rem, 3.2vw, 1.9rem);
+	font-weight: 500;
+	letter-spacing: 0;
+	text-transform: none;
+	color: var(--csd-fg);
+}
+
+/* Ruled heading: a thin line above it separates a new topic */
+.csd-page .is-style-csd-ruled {
+	margin-top: 48px;
+	padding-top: 32px;
+	border-top: 1px solid var(--csd-edge);
+}
+
+
+/* 5. Text, links, lists */
+.csd-page p {
+	margin: 0 0 16px;
+	color: var(--csd-fg);
+}
+
+.csd-page a {
+	color: var(--csd-link);
+	text-decoration: underline;
+	text-underline-offset: 0.18em;
+}
+
+.csd-page a:focus-visible,
+.csd-page .wp-block-button__link:focus-visible {
+	outline: 3px solid var(--csd-focus);
+	outline-offset: 3px;
+}
+
+.csd-page ul,
+.csd-page ol {
+	margin: 0 0 16px;
+	padding-left: 1.4em;
+	color: var(--csd-fg);
+}
+
+.csd-page li {
+	margin-bottom: 6px;
+}
+
+/* List style: round markers in the accent color */
+.csd-page ul.is-style-csd-list {
+	list-style: disc;
+}
+
+.csd-page ul.is-style-csd-list li::marker {
+	color: var(--csd-rule);
+}
+
+/* Quote style: a serif quotation with a bar */
+.csd-page blockquote.wp-block-quote,
+.csd-page .is-style-csd-quote {
+	margin: 0 0 24px;
+	padding: 4px 0 4px 24px;
+	border-left: 4px solid var(--csd-rule);
+}
+
+.csd-page .is-style-csd-quote p {
+	font-family: var(--csd-font-quote);
+	font-size: 1.3rem;
+	font-style: italic;
+	line-height: 1.5;
+}
+
+.csd-page blockquote cite {
+	display: block;
+	font-size: 0.9rem;
+	font-style: normal;
+	color: var(--csd-fg-soft);
+}
+
+.csd-page hr.wp-block-separator {
+	height: 0;
+	margin: 32px 0;
+	border: 0;
+	border-top: 1px solid var(--csd-edge);
+	background: none;
+	opacity: 1;
+}
+
+
+/* 6. Buttons, and the Call to action paragraph (a paragraph whose link looks like a button) */
+.csd-page .wp-block-buttons {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin: 0 0 16px;
+}
+
+.csd-page .wp-block-button__link,
+.csd-page p.is-style-csd-cta a {
+	display: inline-block;
+	padding: 12px 26px;
+	border: 2px solid var(--csd-btn-bg);
+	border-radius: var(--csd-radius);
+	background-color: var(--csd-btn-bg);
+	color: var(--csd-btn-fg);
+	font-family: var(--csd-font-body);
+	font-size: 1rem;
+	font-weight: 600;
+	line-height: 1.3;
+	text-align: center;
+	text-decoration: none;
+}
+
+.csd-page .wp-block-button__link:hover,
+.csd-page p.is-style-csd-cta a:hover {
+	border-color: var(--csd-btn-hover);
+	background-color: var(--csd-btn-hover);
+	color: var(--csd-btn-fg);
+}
+
+.csd-page .is-style-outline .wp-block-button__link {
+	background-color: transparent;
+	color: var(--csd-fg);
+	border-color: var(--csd-fg);
+}
+
+.csd-page .is-style-outline .wp-block-button__link:hover {
+	background-color: var(--csd-tint);
+	border-color: var(--csd-fg);
+	color: var(--csd-fg);
+}
+
+.csd-page p.is-style-csd-cta {
+	margin: 24px 0 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.csd-page .wp-block-button__link,
+	.csd-page p.is-style-csd-cta a {
+		transition: background-color 0.15s ease, border-color 0.15s ease;
+	}
+}
+
+
+/* 7. Boxes inside a band */
+
+/* Note: a short callout with a bar on its left edge */
+.csd-page .is-style-csd-note {
+	margin: 0 0 24px;
+	padding: 14px 18px;
+	border-left: 4px solid var(--csd-rule);
+	border-radius: 0 var(--csd-radius) var(--csd-radius) 0;
+	background-color: var(--csd-tint);
+}
+
+.csd-page .is-style-csd-note p:last-child {
+	margin-bottom: 0;
+}
+
+/* Split layout: text on the left, a box or list on the right. One column on a phone. */
+.csd-page .is-style-csd-split {
+	display: grid;
+	grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+	gap: calc(var(--csd-gap) * 2);
+	align-items: start;
+}
+
+/* Cards layout: as many cards per row as fit */
+.csd-page .is-style-csd-cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+	gap: var(--csd-gap);
+	margin-top: 24px;
+}
+
+/* Pentagon layout: five cards, three on the first row and two centered under them */
+.csd-page .is-style-csd-pentagon {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: var(--csd-gap);
+	margin-top: 24px;
+}
+
+.csd-page .is-style-csd-pentagon > * {
+	flex: 1 1 calc((100% - 2 * var(--csd-gap)) / 3 - 1px);
+	min-width: min(100%, 230px);
+	max-width: calc((100% - 2 * var(--csd-gap)) / 3);
+}
+
+/* Card: a white box with a thin border */
+.csd-page .is-style-csd-card {
+	padding: 24px;
+	border: 1px solid var(--csd-line);
+	border-radius: var(--csd-radius);
+	background-color: var(--csd-paper);
+	color: var(--csd-fg);
+	box-shadow: 0 1px 3px rgba(15, 23, 32, 0.12);
+}
+
+.csd-page .is-style-csd-light .is-style-csd-card {
+	background-color: var(--csd-mist);
+	box-shadow: none;
+}
+
+.csd-page .is-style-csd-card > :last-child {
+	margin-bottom: 0;
+}
+
+.csd-page .is-style-csd-card h4 {
+	color: var(--csd-fg);
+}
+
+/* Panels layout and Panel: two or more large side-by-side areas */
+.csd-page .is-style-csd-panels {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+	gap: var(--csd-gap);
+}
+
+.csd-page .is-style-csd-panel {
+	padding: 32px;
+	border: 1px solid var(--csd-edge);
+	border-radius: var(--csd-radius);
+	background-color: var(--csd-tint);
+}
+
+.csd-page .is-style-csd-panel > :last-child {
+	margin-bottom: 0;
+}
+
+/* Placeholder box: a dashed outline that marks where content still has to go */
+.csd-page .is-style-csd-placeholder {
+	padding: 24px;
+	border: 2px dashed var(--csd-line);
+	border-radius: var(--csd-radius);
+	background-color: var(--csd-mist);
+	color: var(--csd-fg);
+}
+
+.csd-page .is-style-csd-placeholder > :last-child {
+	margin-bottom: 0;
+}
+
+/* Glass panel: a see-through box on a dark band */
+.csd-page .is-style-csd-glass {
+	padding: 40px;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	border-radius: var(--csd-radius);
+	background-color: rgba(255, 255, 255, 0.12);
+	color: var(--csd-fg);
+}
+
+@supports (backdrop-filter: blur(4px)) {
+	.csd-page .is-style-csd-glass {
+		backdrop-filter: blur(6px);
+	}
+}
+
+.csd-page .is-style-csd-glass > :last-child {
+	margin-bottom: 0;
+}
+
+/* Facts panel: a box for short facts or a list, with a colored top edge */
+.csd-page .is-style-csd-facts {
+	padding: 24px;
+	border: 1px solid var(--csd-line);
+	border-top: 4px solid var(--csd-rule);
+	border-radius: var(--csd-radius);
+	background-color: var(--csd-paper);
+	color: var(--csd-fg);
+}
+
+.csd-page .is-style-csd-facts ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.csd-page .is-style-csd-facts li {
+	margin: 0;
+	padding: 10px 0;
+	border-bottom: 1px solid var(--csd-line);
+}
+
+.csd-page .is-style-csd-facts li:last-child {
+	border-bottom: 0;
+}
+
+/* Listing frame: a quiet frame for an embedded widget, map or list */
+.csd-page .is-style-csd-listing {
+	min-height: 160px;
+	padding: 16px;
+	border: 1px solid var(--csd-line);
+	border-radius: var(--csd-radius);
+	background-color: var(--csd-paper);
+	color: var(--csd-fg);
+	overflow: hidden;
+}
+
+
+/* 8. Images and photos */
+
+/* Icon badge: a small round picture, for example above a card heading */
+.csd-page figure.is-style-csd-icon {
+	margin: 0 0 16px;
+}
+
+.csd-page figure.is-style-csd-icon img {
+	display: block;
+	width: 72px;
+	height: 72px;
+	padding: 14px;
+	border-radius: 50%;
+	background-color: var(--csd-mist);
+	object-fit: contain;
+}
+
+.csd-page .wp-block-image img {
+	max-width: 100%;
+	height: auto;
+}
+
+/* Photo band and photo tile are Cover blocks. A dark layer keeps white text readable over any photo. */
+.csd-page .is-style-csd-photo-band,
+.csd-page .is-style-csd-photo-tile {
+	position: relative;
+	isolation: isolate;
+	display: flex;
+	margin: 0;
+	background-color: var(--csd-night-2);
+	color: var(--csd-fg);
+	overflow: hidden;
+}
+
+.csd-page .is-style-csd-photo-band::before,
+.csd-page .is-style-csd-photo-tile::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	background-color: var(--csd-shade);
+}
+
+.csd-page .is-style-csd-photo-band .wp-block-cover__inner-container,
+.csd-page .is-style-csd-photo-tile .wp-block-cover__inner-container {
+	position: relative;
+	z-index: 1;
+	width: 100%;
+}
+
+.csd-page .is-style-csd-photo-band {
+	align-items: center;
+	min-height: 420px;
+	padding: var(--csd-space) var(--csd-gap);
+	text-align: center;
+}
+
+.csd-page .is-style-csd-photo-band .wp-block-cover__inner-container {
+	max-width: 760px;
+	margin: 0 auto;
+}
+
+.csd-page .is-style-csd-photo-band .wp-block-buttons {
+	justify-content: center;
+}
+
+.csd-page .is-style-csd-photo-tile {
+	align-items: flex-end;
+	min-height: 300px;
+	padding: 24px;
+	border-radius: var(--csd-radius);
+}
+
+.csd-page .is-style-csd-photo-tile h3 {
+	margin-bottom: 12px;
+	font-size: 1.5rem;
+}
+
+.csd-page .is-style-csd-photo-band h2,
+.csd-page .is-style-csd-photo-band h3,
+.csd-page .is-style-csd-photo-tile h2,
+.csd-page .is-style-csd-photo-tile h3 {
+	color: var(--csd-on-dark);
+}
+
+.csd-page .is-style-csd-photo-band h2 {
+	font-size: clamp(1.6rem, 4vw, 2.4rem);
+	letter-spacing: 0;
+	text-transform: none;
+}
+
+
+/* 9. Tables and columns */
+.csd-page figure.wp-block-table {
+	margin: 0 0 24px;
+	overflow-x: auto;
+}
+
+.csd-page table {
+	width: 100%;
+	border-collapse: collapse;
+	color: var(--csd-ink);
+}
+
+.csd-page th,
+.csd-page td {
+	padding: 10px 14px;
+	border-bottom: 1px solid var(--csd-line);
+	text-align: left;
+}
+
+.csd-page th {
+	background-color: var(--csd-mist);
+	font-weight: 700;
+}
+
+.csd-page .wp-block-columns {
+	gap: var(--csd-gap);
+	margin: 0 0 24px;
+}
+
+.csd-page .wp-block-column {
+	min-width: 0;
+}
+
+
+/* 10. Small screens */
+@media (max-width: 760px) {
+	.csd-page {
+		--csd-space: 48px;
+		--csd-gap: 16px;
+		font-size: 16px;
+	}
+
+	.csd-page .is-style-csd-split {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 24px;
+	}
+
+	.csd-page .is-style-csd-pentagon > * {
+		flex-basis: 100%;
+		max-width: 100%;
+	}
+
+	.csd-page .is-style-csd-glass,
+	.csd-page .is-style-csd-panel {
+		padding: 24px;
+	}
+
+	.csd-page .is-style-csd-hero {
+		min-height: 0;
+	}
+}

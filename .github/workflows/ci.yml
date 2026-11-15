@@ -1,0 +1,97 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Read-only by default. No job in this file needs more.
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: PHP lint (PHP ${{ matrix.php }})
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ["7.4", "8.0", "8.1", "8.2", "8.3", "8.4"]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: none
+      - name: php -l on every PHP file
+        run: find csd-site-styles tests -name '*.php' -print0 | xargs -0 -n1 php -l
+
+  phpcs:
+    name: PHPCS (WordPress standards)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: "8.3"
+          coverage: none
+          tools: composer
+      - name: Install the coding standards
+        run: composer install --no-interaction --no-progress --prefer-dist
+      - name: Run PHPCS (errors fail the build, warnings are listed)
+        run: vendor/bin/phpcs --report=full
+
+  sanitizer:
+    name: Sanitizer test (PHP ${{ matrix.php }})
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ["7.4", "8.3"]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: none
+      - name: Run the sanitizer cases and check that examples/demo-site.css passes unchanged
+        run: php tests/sanitizer-test.php
+
+  render:
+    name: Render check of the demo stylesheet
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Playwright and Chromium
+        run: |
+          python3 -m pip install --user playwright==1.64.1
+          python3 -m playwright install --with-deps chromium
+      - name: Copy WordPress's block library stylesheet from the official image
+        # Image pinned by digest (WordPress 6.9, PHP 8.3). The browser's own system packages come from apt and are not pinned.
+        run: docker run --rm wordpress@sha256:5d2c212561c4b5442ebc4d98933a9cbadcf3dee8888ed3fd9ed44667c27cc905 cat /usr/src/wordpress/wp-includes/css/dist/block-library/style.min.css > "$RUNNER_TEMP/block-library.css"
+      - name: Draw the gallery content at 1440 and 390 wide (needs 0 overflow, 0 contrast fails)
+        run: python3 tests/render_check.py --block-css "$RUNNER_TEMP/block-library.css"
+
+  package:
+    name: Build the plugin zip
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Build and check the zip
+        run: python3 bin/build-zip.py

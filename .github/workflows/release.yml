@@ -1,0 +1,74 @@
+name: Release
+
+# Runs when a tag such as v1.5.1 is pushed. Builds the plugin zip (only the csd-site-styles/ folder),
+# requires the tagged commit to be on main (the checkout fetches every branch, so no second fetch is needed). It does not wait for the CI workflow: it runs the lint, phpcs and test steps itself, re-runs lint, phpcs and the sanitizer test (self-contained, so it needs no
+# extra permissions to read CI results), checks that the tag matches the plugin version, and attaches the zip to a GitHub release.
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    name: Build the zip and create the release
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write # needed to create the release and upload the zip
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Require the tagged commit to be on main
+        run: |
+          git rev-parse --verify --quiet refs/remotes/origin/main > /dev/null || { echo "origin/main not found" >&2; exit 1; }
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
+            echo "The tagged commit is not on main. Merge it to main first, then tag it." >&2
+            exit 1
+          fi
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: "8.3"
+          coverage: none
+          tools: composer
+      - name: Lint every PHP file
+        run: find csd-site-styles tests -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Coding standards
+        run: |
+          composer install --no-interaction --no-progress --prefer-dist
+          vendor/bin/phpcs --report=full
+      - name: Run the sanitizer test before releasing
+        run: php tests/sanitizer-test.php
+      - name: Build the zip (fails if the tag does not match the plugin version)
+        env:
+          TAG: ${{ github.ref_name }}
+        run: python3 bin/build-zip.py --tag "$TAG"
+      - name: Write the release notes from CHANGELOG.md
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          version="${TAG#v}"
+          awk -v v="$version" '
+            $0 ~ "^## \\[" v "\\]" { found = 1; next }
+            found && /^## \[/ { exit }
+            found { print }
+          ' CHANGELOG.md > "$RUNNER_TEMP/notes.md"
+          if [ ! -s "$RUNNER_TEMP/notes.md" ]; then
+            echo "No CHANGELOG.md section found for $version" >&2
+            exit 1
+          fi
+      - name: Create the release and attach the zip
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          version="${TAG#v}"
+          zip="dist/csd-site-styles-${version}.zip"
+          (cd dist && sha256sum "csd-site-styles-${version}.zip" > "csd-site-styles-${version}.zip.sha256")
+          gh release create "$TAG" "$zip" "$zip.sha256" \
+            --verify-tag \
+            --title "CSD Site Styles ${version}" \
+            --notes-file "$RUNNER_TEMP/notes.md"

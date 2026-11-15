@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<ruleset name="CSD Site Styles">
+	<description>WordPress coding standards for the CSD Site Styles plugin. Warnings are reported but do not fail the build; errors do.</description>
+
+	<file>csd-site-styles</file>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+
+	<arg name="extensions" value="php"/>
+	<arg name="colors"/>
+	<arg value="sp"/>
+	<!-- Fail (exit code 1) on errors only. Warnings are shown. -->
+	<config name="ignore_warnings_on_exit" value="1"/>
+
+	<rule ref="WordPress">
+		<!-- The plugin file names follow the WordPress plugin convention for a plugin folder, not the class-file convention. -->
+		<exclude name="WordPress.Files.FileName"/>
+	</rule>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="csd-site-styles"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="csd_site_styles"/>
+				<element value="CSD_SITE_STYLES"/>
+			</property>
+		</properties>
+	</rule>
+
+	<config name="testVersion" value="7.4-"/>
+	<rule ref="PHPCompatibilityWP"/>
+	<config name="minimum_wp_version" value="6.9"/>
+</ruleset>
