@@ -2,6 +2,11 @@
 
 All notable changes to ClearStyle (formerly CSD Site Styles) are listed here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.6.1] - 2026-11-17
+
+### Fixed
+- Fixes the release build; no change to the plugin's behavior. The coding-standards check failed on `count()` inside the loop condition of `uninstall.php`, and on the alignment of three lines in the settings page code. The network uninstall now stores the count in a variable first.
+
 ## [1.6.0] - 2026-11-17
 
 ### Changed

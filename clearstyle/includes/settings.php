@@ -138,8 +138,8 @@ function csd_site_styles_read_input( &$errors ) {
 		&& isset( $_FILES['csd_css_file']['error'] ) && UPLOAD_ERR_NO_FILE !== (int) $_FILES['csd_css_file']['error'];
 
 	if ( $has_file ) {
-		$error = (int) $_FILES['csd_css_file']['error'];
 		// A field posted as an array (csd_css_file[name][]) is not a real upload: treat its parts as empty so nothing is cast from an array.
+		$error = (int) $_FILES['csd_css_file']['error'];
 		$name  = ( isset( $_FILES['csd_css_file']['name'] ) && is_string( $_FILES['csd_css_file']['name'] ) ) ? sanitize_file_name( wp_unslash( $_FILES['csd_css_file']['name'] ) ) : '';
 		$tmp   = ( isset( $_FILES['csd_css_file']['tmp_name'] ) && is_string( $_FILES['csd_css_file']['tmp_name'] ) ) ? $_FILES['csd_css_file']['tmp_name'] : '';
 		$size  = isset( $_FILES['csd_css_file']['size'] ) ? (int) $_FILES['csd_css_file']['size'] : 0;

@@ -3,7 +3,7 @@
  * Plugin Name:       ClearStyle
  * Plugin URI:        https://github.com/ClearSky-Digital/clearstyle
  * Description:       Block style names, block patterns and a settings page for pages built from WordPress's own blocks. The plugin carries no styling: the look comes from a CSS file you save on its settings page.
- * Version:           1.6.0
+ * Version:           1.6.1
  * Requires at least: 6.9
  * Requires PHP:      7.4
  * Author:            ClearSky Digital
@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CSD_SITE_STYLES_VERSION', '1.6.0' );
+define( 'CSD_SITE_STYLES_VERSION', '1.6.1' );
 define( 'CSD_SITE_STYLES_OPTION', 'csd_site_styles_config' );
 
 require_once plugin_dir_path( __FILE__ ) . 'includes/patterns.php';

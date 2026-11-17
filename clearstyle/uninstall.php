@@ -33,6 +33,7 @@ if ( is_multisite() ) {
 	// Walk the network in pages of 100 sites, so a very large network is not loaded in one query.
 	$csd_site_styles_offset = 0;
 	$csd_site_styles_batch  = 100;
+	$csd_site_styles_found  = 0;
 	do {
 		$csd_site_styles_ids = get_sites(
 			array(
@@ -46,8 +47,9 @@ if ( is_multisite() ) {
 			$csd_site_styles_clean();
 			restore_current_blog();
 		}
+		$csd_site_styles_found   = count( $csd_site_styles_ids );
 		$csd_site_styles_offset += $csd_site_styles_batch;
-	} while ( count( $csd_site_styles_ids ) === $csd_site_styles_batch );
+	} while ( $csd_site_styles_found === $csd_site_styles_batch );
 } else {
 	$csd_site_styles_clean();
 }

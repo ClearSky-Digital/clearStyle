@@ -4,7 +4,7 @@ Tags: block styles, block patterns, custom css, gutenberg
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,6 +72,9 @@ Download `clearstyle-<version>.zip` from the Releases page of https://github.com
 
 == Changelog ==
 
+= 1.6.1 =
+* Fixes the release build; no change to the plugin's behavior.
+
 = 1.6.0 =
 * Renamed from CSD Site Styles; saved settings carry over.
 * The plugin folder, main file, slug and text domain are now clearstyle. Option names, hooks and function names are unchanged.
@@ -93,6 +96,9 @@ Download `clearstyle-<version>.zip` from the Releases page of https://github.com
 * Removed the stylesheets, the tokens file and the font loader.
 
 == Upgrade Notice ==
+
+= 1.6.1 =
+Fixes the release build; no change to the plugin's behavior. If you use CSD Site Styles, see the FAQ on switching to ClearStyle.
 
 = 1.6.0 =
 ClearStyle is the new name of CSD Site Styles and installs as its own plugin. Deactivate CSD Site Styles, then activate ClearStyle, and your saved CSS carries over.
