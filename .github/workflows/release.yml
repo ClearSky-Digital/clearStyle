@@ -1,6 +1,6 @@
 name: Release
 
-# Runs when a tag such as v1.5.1 is pushed. Builds the plugin zip (only the csd-site-styles/ folder),
+# Runs when a tag such as v1.5.1 is pushed. Builds the plugin zip (only the clearstyle/ folder),
 # requires the tagged commit to be on main (the checkout fetches every branch, so no second fetch is needed). It does not wait for the CI workflow: it runs the lint, phpcs and test steps itself, re-runs lint, phpcs and the sanitizer test (self-contained, so it needs no
 # extra permissions to read CI results), checks that the tag matches the plugin version, and attaches the zip to a GitHub release.
 on:
@@ -35,7 +35,7 @@ jobs:
           coverage: none
           tools: composer
       - name: Lint every PHP file
-        run: find csd-site-styles tests -name '*.php' -print0 | xargs -0 -n1 php -l
+        run: find clearstyle tests -name '*.php' -print0 | xargs -0 -n1 php -l
       - name: Coding standards
         run: |
           composer install --no-interaction --no-progress --prefer-dist
@@ -66,9 +66,9 @@ jobs:
           TAG: ${{ github.ref_name }}
         run: |
           version="${TAG#v}"
-          zip="dist/csd-site-styles-${version}.zip"
-          (cd dist && sha256sum "csd-site-styles-${version}.zip" > "csd-site-styles-${version}.zip.sha256")
+          zip="dist/clearstyle-${version}.zip"
+          (cd dist && sha256sum "clearstyle-${version}.zip" > "clearstyle-${version}.zip.sha256")
           gh release create "$TAG" "$zip" "$zip.sha256" \
             --verify-tag \
-            --title "CSD Site Styles ${version}" \
+            --title "ClearStyle ${version}" \
             --notes-file "$RUNNER_TEMP/notes.md"

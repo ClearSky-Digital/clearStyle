@@ -3,13 +3,13 @@
  * Extra adversarial inputs for the CSS checks, as name => array( css, expected ok ).
  * Loaded by tests/sanitizer-test.php.
  *
- * This file is part of CSD Site Styles.
+ * This file is part of ClearStyle.
  *
- * CSD Site Styles is free software; you can redistribute it and/or modify it under the terms of the
+ * ClearStyle is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
- * CSD Site Styles is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * ClearStyle is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  *

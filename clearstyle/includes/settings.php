@@ -1,15 +1,15 @@
 <?php
 /**
- * The settings page for CSD Site Styles.
+ * The settings page for ClearStyle.
  *
  * One page under Settings. It takes a CSS file or pasted CSS, checks it (css-sanitizer.php), saves it in one option and shows it.
  * Only people who can manage options reach it. Saving and clearing each need a nonce.
  *
- * CSD Site Styles is free software; you can redistribute it and/or modify it under the terms of the
+ * ClearStyle is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
- * CSD Site Styles is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * ClearStyle is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  *
@@ -18,7 +18,7 @@
  *
  * Copyright (C) 2026 ClearSky Digital LLC (https://cscloud.digital)
  *
- * @package CSD_Site_Styles
+ * @package ClearStyle
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -70,10 +70,10 @@ function csd_site_styles_add_menu() {
 		return;
 	}
 	add_options_page(
-		__( 'CSD Site Styles', 'csd-site-styles' ),
-		__( 'CSD Site Styles', 'csd-site-styles' ),
+		__( 'ClearStyle', 'clearstyle' ),
+		__( 'ClearStyle', 'clearstyle' ),
 		'manage_options',
-		'csd-site-styles',
+		'clearstyle',
 		'csd_site_styles_render_page'
 	);
 }
@@ -93,9 +93,9 @@ function csd_site_styles_no_css_notice() {
 	}
 	printf(
 		'<div class="notice notice-warning is-dismissible csd-site-styles-no-css"><p>%s <a href="%s">%s</a></p></div>',
-		esc_html__( 'CSD Site Styles is active but no CSS is saved. Pages that use the csd-page class show as plain blocks until you save a CSS file.', 'csd-site-styles' ),
-		esc_url( admin_url( 'options-general.php?page=csd-site-styles' ) ),
-		esc_html__( 'Open CSD Site Styles', 'csd-site-styles' )
+		esc_html__( 'ClearStyle is active but no CSS is saved. Pages that use the csd-page class show as plain blocks until you save a CSS file.', 'clearstyle' ),
+		esc_url( admin_url( 'options-general.php?page=clearstyle' ) ),
+		esc_html__( 'Open ClearStyle', 'clearstyle' )
 	);
 }
 add_action( 'admin_notices', 'csd_site_styles_no_css_notice' );
@@ -121,7 +121,7 @@ function csd_site_styles_set_notice( $type, $lines ) {
  * Send the person back to the settings page.
  */
 function csd_site_styles_back() {
-	wp_safe_redirect( admin_url( 'options-general.php?page=csd-site-styles' ) );
+	wp_safe_redirect( admin_url( 'options-general.php?page=clearstyle' ) );
 	exit;
 }
 
@@ -145,28 +145,28 @@ function csd_site_styles_read_input( &$errors ) {
 		$size  = isset( $_FILES['csd_css_file']['size'] ) ? (int) $_FILES['csd_css_file']['size'] : 0;
 
 		if ( UPLOAD_ERR_OK !== $error ) {
-			$errors[] = __( 'The file did not upload.', 'csd-site-styles' );
+			$errors[] = __( 'The file did not upload.', 'clearstyle' );
 			return null;
 		}
 		if ( 'css' !== strtolower( pathinfo( $name, PATHINFO_EXTENSION ) ) ) {
-			$errors[] = __( 'The file must end in .css.', 'csd-site-styles' );
+			$errors[] = __( 'The file must end in .css.', 'clearstyle' );
 			return null;
 		}
 		if ( $size > CSD_SITE_STYLES_CSS_MAX ) {
-			$errors[] = __( 'The file is larger than the size limit.', 'csd-site-styles' );
+			$errors[] = __( 'The file is larger than the size limit.', 'clearstyle' );
 			return null;
 		}
 		if ( '' === $tmp || ! is_uploaded_file( $tmp ) ) {
-			$errors[] = __( 'The file did not upload.', 'csd-site-styles' );
+			$errors[] = __( 'The file did not upload.', 'clearstyle' );
 			return null;
 		}
 		$text = file_get_contents( $tmp ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- reads the uploaded local file.
 		if ( false === $text ) {
-			$errors[] = __( 'The file could not be read.', 'csd-site-styles' );
+			$errors[] = __( 'The file could not be read.', 'clearstyle' );
 			return null;
 		}
 		if ( '' === trim( $text ) ) {
-			$errors[] = __( 'The file is empty. To remove the saved CSS, use Clear saved CSS.', 'csd-site-styles' );
+			$errors[] = __( 'The file is empty. To remove the saved CSS, use Clear saved CSS.', 'clearstyle' );
 			return null;
 		}
 		return $text;
@@ -179,7 +179,7 @@ function csd_site_styles_read_input( &$errors ) {
 		}
 	}
 
-	$errors[] = __( 'Choose a CSS file or paste CSS before saving. To remove the saved CSS, use Clear saved CSS.', 'csd-site-styles' );
+	$errors[] = __( 'Choose a CSS file or paste CSS before saving. To remove the saved CSS, use Clear saved CSS.', 'clearstyle' );
 	return null;
 }
 
@@ -191,7 +191,7 @@ function csd_site_styles_read_input( &$errors ) {
  */
 function csd_site_styles_handle_save() {
 	if ( ! csd_site_styles_user_can_manage() ) {
-		wp_die( esc_html__( 'You do not have permission to change these settings.', 'csd-site-styles' ), 403 );
+		wp_die( esc_html__( 'You do not have permission to change these settings.', 'clearstyle' ), 403 );
 	}
 	// A file larger than the server's post_max_size empties $_POST before WordPress sees it, so the nonce check would show a confusing "link expired" message.
 	// phpcs:ignore WordPress.Security.NonceVerification.Missing -- only decides which message to show; nothing is saved on this path.
@@ -199,8 +199,8 @@ function csd_site_styles_handle_save() {
 		csd_site_styles_set_notice(
 			'error',
 			array(
-				__( 'The CSS was not saved. The saved CSS is unchanged.', 'csd-site-styles' ),
-				__( 'The upload is larger than this server accepts. Use a smaller file or paste the CSS instead.', 'csd-site-styles' ),
+				__( 'The CSS was not saved. The saved CSS is unchanged.', 'clearstyle' ),
+				__( 'The upload is larger than this server accepts. Use a smaller file or paste the CSS instead.', 'clearstyle' ),
 			)
 		);
 		csd_site_styles_back();
@@ -221,13 +221,13 @@ function csd_site_styles_handle_save() {
 				),
 				false
 			);
-			csd_site_styles_set_notice( 'success', array( __( 'The CSS was saved.', 'csd-site-styles' ) ) );
+			csd_site_styles_set_notice( 'success', array( __( 'The CSS was saved.', 'clearstyle' ) ) );
 			csd_site_styles_back();
 		}
 		$errors = $result['errors'];
 	}
 
-	array_unshift( $errors, __( 'The CSS was not saved. The saved CSS is unchanged.', 'csd-site-styles' ) );
+	array_unshift( $errors, __( 'The CSS was not saved. The saved CSS is unchanged.', 'clearstyle' ) );
 	csd_site_styles_set_notice( 'error', $errors );
 	csd_site_styles_back();
 }
@@ -238,12 +238,12 @@ add_action( 'admin_post_csd_site_styles_save', 'csd_site_styles_handle_save' );
  */
 function csd_site_styles_handle_clear() {
 	if ( ! csd_site_styles_user_can_manage() ) {
-		wp_die( esc_html__( 'You do not have permission to change these settings.', 'csd-site-styles' ), 403 );
+		wp_die( esc_html__( 'You do not have permission to change these settings.', 'clearstyle' ), 403 );
 	}
 	check_admin_referer( 'csd_site_styles_clear' );
 
 	delete_option( CSD_SITE_STYLES_OPTION );
-	csd_site_styles_set_notice( 'success', array( __( 'The saved CSS was cleared.', 'csd-site-styles' ) ) );
+	csd_site_styles_set_notice( 'success', array( __( 'The saved CSS was cleared.', 'clearstyle' ) ) );
 	csd_site_styles_back();
 }
 add_action( 'admin_post_csd_site_styles_clear', 'csd_site_styles_handle_clear' );
@@ -253,7 +253,7 @@ add_action( 'admin_post_csd_site_styles_clear', 'csd_site_styles_handle_clear' )
  */
 function csd_site_styles_render_page() {
 	if ( ! csd_site_styles_user_can_manage() ) {
-		wp_die( esc_html__( 'You do not have permission to open this page.', 'csd-site-styles' ), 403 );
+		wp_die( esc_html__( 'You do not have permission to open this page.', 'clearstyle' ), 403 );
 	}
 
 	$config = get_option( CSD_SITE_STYLES_OPTION, array() );
@@ -269,8 +269,8 @@ function csd_site_styles_render_page() {
 	$max_kb              = number_format_i18n( CSD_SITE_STYLES_CSS_MAX / 1024 );
 	?>
 	<div class="wrap">
-		<h1><?php echo esc_html__( 'CSD Site Styles', 'csd-site-styles' ); ?></h1>
-		<p><?php echo esc_html__( 'This plugin carries no styling. It registers block style names and block patterns, and it prints the CSS you save here on pages that use the csd-page class and in the block editor.', 'csd-site-styles' ); ?></p>
+		<h1><?php echo esc_html__( 'ClearStyle', 'clearstyle' ); ?></h1>
+		<p><?php echo esc_html__( 'This plugin carries no styling. It registers block style names and block patterns, and it prints the CSS you save here on pages that use the csd-page class and in the block editor.', 'clearstyle' ); ?></p>
 
 		<?php if ( is_array( $notice ) && ! empty( $notice['lines'] ) ) : ?>
 			<div class="notice notice-<?php echo esc_attr( 'success' === $notice['type'] ? 'success' : 'error' ); ?>">
@@ -282,13 +282,13 @@ function csd_site_styles_render_page() {
 
 		<?php if ( $stored_but_rejected ) : ?>
 			<div class="notice notice-warning">
-				<p><?php echo esc_html__( 'The saved CSS no longer passes the checks, so it is not being printed. Save a new file or clear it.', 'csd-site-styles' ); ?></p>
+				<p><?php echo esc_html__( 'The saved CSS no longer passes the checks, so it is not being printed. Save a new file or clear it.', 'clearstyle' ); ?></p>
 			</div>
 		<?php endif; ?>
 
-		<h2><?php echo esc_html__( 'Saved CSS', 'csd-site-styles' ); ?></h2>
+		<h2><?php echo esc_html__( 'Saved CSS', 'clearstyle' ); ?></h2>
 		<?php if ( '' === $css ) : ?>
-			<p><?php echo esc_html__( 'No CSS is saved. Pages built from the patterns show as plain blocks.', 'csd-site-styles' ); ?></p>
+			<p><?php echo esc_html__( 'No CSS is saved. Pages built from the patterns show as plain blocks.', 'clearstyle' ); ?></p>
 		<?php else : ?>
 			<p>
 				<?php
@@ -296,49 +296,49 @@ function csd_site_styles_render_page() {
 				echo esc_html(
 					sprintf(
 						/* translators: 1: size in kilobytes, 2: date and time */
-						__( '%1$s KB saved %2$s.', 'csd-site-styles' ),
+						__( '%1$s KB saved %2$s.', 'clearstyle' ),
 						number_format_i18n( strlen( $css ) / 1024, 1 ),
 						$when
 					)
 				);
 				?>
 			</p>
-			<label class="screen-reader-text" for="csd-saved-css"><?php echo esc_html__( 'The saved CSS', 'csd-site-styles' ); ?></label>
+			<label class="screen-reader-text" for="csd-saved-css"><?php echo esc_html__( 'The saved CSS', 'clearstyle' ); ?></label>
 			<textarea id="csd-saved-css" class="large-text code" rows="12" readonly="readonly"><?php echo esc_textarea( $css ); ?></textarea>
 			<form method="post" action="<?php echo esc_url( $action_url ); ?>">
 				<input type="hidden" name="action" value="csd_site_styles_clear" />
 				<?php wp_nonce_field( 'csd_site_styles_clear' ); ?>
-				<?php submit_button( __( 'Clear saved CSS', 'csd-site-styles' ), 'delete', 'csd_clear', false ); ?>
+				<?php submit_button( __( 'Clear saved CSS', 'clearstyle' ), 'delete', 'csd_clear', false ); ?>
 			</form>
 		<?php endif; ?>
 
-		<h2><?php echo esc_html__( 'Save CSS', 'csd-site-styles' ); ?></h2>
+		<h2><?php echo esc_html__( 'Save CSS', 'clearstyle' ); ?></h2>
 		<p>
 			<?php
 			echo esc_html(
 				sprintf(
 					/* translators: %s: size limit in kilobytes */
-					__( 'Upload a .css file or paste CSS. Up to %s KB. Saving replaces the CSS now saved. The text is checked and, if it fails, nothing changes and the page says why.', 'csd-site-styles' ),
+					__( 'Upload a .css file or paste CSS. Up to %s KB. Saving replaces the CSS now saved. The text is checked and, if it fails, nothing changes and the page says why.', 'clearstyle' ),
 					$max_kb
 				)
 			);
 			?>
 		</p>
-		<p><?php echo esc_html__( 'Not accepted: a less-than sign, @import, url() other than data:image/ or a #fragment, expression(), javascript:, behavior:, progid:, -moz-binding, a null character, text that is not valid UTF-8, and unbalanced braces. Fonts are loaded by the theme.', 'csd-site-styles' ); ?></p>
+		<p><?php echo esc_html__( 'Not accepted: a less-than sign, @import, url() other than data:image/ or a #fragment, expression(), javascript:, behavior:, progid:, -moz-binding, a null character, text that is not valid UTF-8, and unbalanced braces. Fonts are loaded by the theme.', 'clearstyle' ); ?></p>
 		<form method="post" action="<?php echo esc_url( $action_url ); ?>" enctype="multipart/form-data">
 			<input type="hidden" name="action" value="csd_site_styles_save" />
 			<?php wp_nonce_field( 'csd_site_styles_save' ); ?>
 			<table class="form-table" role="presentation">
 				<tr>
-					<th scope="row"><label for="csd_css_file"><?php echo esc_html__( 'CSS file', 'csd-site-styles' ); ?></label></th>
+					<th scope="row"><label for="csd_css_file"><?php echo esc_html__( 'CSS file', 'clearstyle' ); ?></label></th>
 					<td><input type="file" id="csd_css_file" name="csd_css_file" accept=".css" /></td>
 				</tr>
 				<tr>
-					<th scope="row"><label for="csd_css_text"><?php echo esc_html__( 'Or paste CSS', 'csd-site-styles' ); ?></label></th>
+					<th scope="row"><label for="csd_css_text"><?php echo esc_html__( 'Or paste CSS', 'clearstyle' ); ?></label></th>
 					<td><textarea id="csd_css_text" name="csd_css_text" class="large-text code" rows="12"></textarea></td>
 				</tr>
 			</table>
-			<?php submit_button( __( 'Save CSS', 'csd-site-styles' ) ); ?>
+			<?php submit_button( __( 'Save CSS', 'clearstyle' ) ); ?>
 		</form>
 
 		<?php csd_site_styles_render_gallery_section( '' !== $css ); ?>

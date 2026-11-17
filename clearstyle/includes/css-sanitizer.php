@@ -9,11 +9,11 @@
  * The scanner reads the CSS the way a browser does: line endings are made into one kind first, comments and quoted strings are set
  * aside, and an unquoted url() is read as one raw token (a comment mark inside it is part of the address, not a comment).
  *
- * CSD Site Styles is free software; you can redistribute it and/or modify it under the terms of the
+ * ClearStyle is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
- * CSD Site Styles is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * ClearStyle is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  *
@@ -22,7 +22,7 @@
  *
  * Copyright (C) 2026 ClearSky Digital LLC (https://cscloud.digital)
  *
- * @package CSD_Site_Styles
+ * @package ClearStyle
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -85,7 +85,7 @@ function csd_site_styles_css_read_string( $css, $i, &$errors ) {
 	$buf   = '';
 	while ( true ) {
 		if ( $j >= $len ) {
-			$errors[] = __( 'A quoted text is not closed.', 'csd-site-styles' );
+			$errors[] = __( 'A quoted text is not closed.', 'clearstyle' );
 			return false;
 		}
 		$d = $css[ $j ];
@@ -95,7 +95,7 @@ function csd_site_styles_css_read_string( $css, $i, &$errors ) {
 			continue;
 		}
 		if ( "\n" === $d ) {
-			$errors[] = __( 'A quoted text runs onto a new line without being closed.', 'csd-site-styles' );
+			$errors[] = __( 'A quoted text runs onto a new line without being closed.', 'clearstyle' );
 			return false;
 		}
 		if ( $d === $quote ) {
@@ -126,7 +126,7 @@ function csd_site_styles_css_scan( $css, &$errors ) {
 		if ( '/' === $c && $i + 1 < $len && '*' === $css[ $i + 1 ] ) {
 			$end = strpos( $css, '*/', $i + 2 );
 			if ( false === $end ) {
-				$errors[] = __( 'A comment is not closed.', 'csd-site-styles' );
+				$errors[] = __( 'A comment is not closed.', 'clearstyle' );
 				return false;
 			}
 			// A comment is a separator, but not white space: a hex escape cannot absorb it and glue two names together.
@@ -164,7 +164,7 @@ function csd_site_styles_css_scan( $css, &$errors ) {
 				}
 				$arg = csd_site_styles_css_unescape( $read[0] );
 				if ( null === $arg ) {
-					$errors[] = __( 'The CSS could not be checked.', 'csd-site-styles' );
+					$errors[] = __( 'The CSS could not be checked.', 'clearstyle' );
 					return false;
 				}
 				$j = $read[1];
@@ -172,14 +172,14 @@ function csd_site_styles_css_scan( $css, &$errors ) {
 					++$j;
 				}
 				if ( $j >= $len || ')' !== $css[ $j ] ) {
-					$errors[] = __( 'A url() is written in a way the plugin cannot read.', 'csd-site-styles' );
+					$errors[] = __( 'A url() is written in a way the plugin cannot read.', 'clearstyle' );
 					return false;
 				}
 			} else {
 				$raw = '';
 				while ( true ) {
 					if ( $j >= $len ) {
-						$errors[] = __( 'A url() is not closed.', 'csd-site-styles' );
+						$errors[] = __( 'A url() is not closed.', 'clearstyle' );
 						return false;
 					}
 					$d = $css[ $j ];
@@ -196,13 +196,13 @@ function csd_site_styles_css_scan( $css, &$errors ) {
 							++$j;
 						}
 						if ( $j >= $len || ')' !== $css[ $j ] ) {
-							$errors[] = __( 'A url() is written in a way the plugin cannot read.', 'csd-site-styles' );
+							$errors[] = __( 'A url() is written in a way the plugin cannot read.', 'clearstyle' );
 							return false;
 						}
 						break;
 					}
 					if ( '"' === $d || "'" === $d || '(' === $d || ord( $d ) < 32 || 127 === ord( $d ) ) {
-						$errors[] = __( 'A url() is written in a way the plugin cannot read. Put the address in quotes.', 'csd-site-styles' );
+						$errors[] = __( 'A url() is written in a way the plugin cannot read. Put the address in quotes.', 'clearstyle' );
 						return false;
 					}
 					$raw .= $d;
@@ -210,7 +210,7 @@ function csd_site_styles_css_scan( $css, &$errors ) {
 				}
 				$arg = csd_site_styles_css_unescape( $raw );
 				if ( null === $arg ) {
-					$errors[] = __( 'The CSS could not be checked.', 'csd-site-styles' );
+					$errors[] = __( 'The CSS could not be checked.', 'clearstyle' );
 					return false;
 				}
 			}
@@ -225,7 +225,7 @@ function csd_site_styles_css_scan( $css, &$errors ) {
 		} elseif ( '}' === $c ) {
 			--$depth;
 			if ( $depth < 0 ) {
-				$errors[] = __( 'There is a closing brace without an opening brace.', 'csd-site-styles' );
+				$errors[] = __( 'There is a closing brace without an opening brace.', 'clearstyle' );
 				return false;
 			}
 		}
@@ -235,7 +235,7 @@ function csd_site_styles_css_scan( $css, &$errors ) {
 	}
 
 	if ( 0 !== $depth ) {
-		$errors[] = __( 'An opening brace is not closed.', 'csd-site-styles' );
+		$errors[] = __( 'An opening brace is not closed.', 'clearstyle' );
 		return false;
 	}
 
@@ -263,7 +263,7 @@ function csd_site_styles_validate_css( $css ) {
 	};
 
 	if ( ! is_string( $css ) ) {
-		return $fail( array( __( 'No CSS was given.', 'csd-site-styles' ) ) );
+		return $fail( array( __( 'No CSS was given.', 'clearstyle' ) ) );
 	}
 
 	if ( 0 === strncmp( $css, "\xEF\xBB\xBF", 3 ) ) {
@@ -275,7 +275,7 @@ function csd_site_styles_validate_css( $css ) {
 			array(
 				sprintf(
 					/* translators: %s: the size limit in kilobytes */
-					__( 'The CSS is larger than %s KB.', 'csd-site-styles' ),
+					__( 'The CSS is larger than %s KB.', 'clearstyle' ),
 					number_format_i18n( CSD_SITE_STYLES_CSS_MAX / 1024 )
 				),
 			)
@@ -283,17 +283,17 @@ function csd_site_styles_validate_css( $css ) {
 	}
 
 	if ( '' === trim( $css ) ) {
-		return $fail( array( __( 'The CSS is empty.', 'csd-site-styles' ) ) );
+		return $fail( array( __( 'The CSS is empty.', 'clearstyle' ) ) );
 	}
 
 	if ( false !== strpos( $css, "\0" ) ) {
-		$errors[] = __( 'The CSS contains a null character.', 'csd-site-styles' );
+		$errors[] = __( 'The CSS contains a null character.', 'clearstyle' );
 	}
 	if ( 1 !== preg_match( '//u', $css ) ) {
-		$errors[] = __( 'The CSS is not valid UTF-8 text.', 'csd-site-styles' );
+		$errors[] = __( 'The CSS is not valid UTF-8 text.', 'clearstyle' );
 	}
 	if ( false !== strpos( $css, '<' ) ) {
-		$errors[] = __( 'The CSS contains a less-than sign. Markup and the end of a style element are not accepted.', 'csd-site-styles' );
+		$errors[] = __( 'The CSS contains a less-than sign. Markup and the end of a style element are not accepted.', 'clearstyle' );
 	}
 	if ( $errors ) {
 		return $fail( $errors );
@@ -301,7 +301,7 @@ function csd_site_styles_validate_css( $css ) {
 
 	$css = preg_replace( '/\r\n?|\f/', "\n", $css );
 	if ( null === $css ) {
-		return $fail( array( __( 'The CSS could not be checked.', 'csd-site-styles' ) ) );
+		return $fail( array( __( 'The CSS could not be checked.', 'clearstyle' ) ) );
 	}
 
 	$scan = csd_site_styles_css_scan( $css, $errors );
@@ -311,27 +311,27 @@ function csd_site_styles_validate_css( $css ) {
 
 	$plain = csd_site_styles_css_unescape( $scan['plain'] );
 	if ( null === $plain ) {
-		return $fail( array( __( 'The CSS could not be checked.', 'csd-site-styles' ) ) );
+		return $fail( array( __( 'The CSS could not be checked.', 'clearstyle' ) ) );
 	}
 	$plain = csd_site_styles_ascii_lower( $plain );
 	// A comment inside a name, such as expression/**/(, reads as the marker byte. For the name checks below the marker counts as white space.
 	$spaced = str_replace( "\x01", ' ', $plain );
 
 	if ( false !== strpos( $plain, '@import' ) ) {
-		$errors[] = __( '@import is not accepted. Put the rules in this file, or load fonts from the theme.', 'csd-site-styles' );
+		$errors[] = __( '@import is not accepted. Put the rules in this file, or load fonts from the theme.', 'clearstyle' );
 	}
 
 	$patterns = array(
-		'/expression\s*\(/'                           => __( 'expression() is not accepted.', 'csd-site-styles' ),
-		'/(?:javascript|vbscript)\s*:/'               => __( 'Script addresses are not accepted.', 'csd-site-styles' ),
-		'/(?<![a-z0-9.#-])behavior\s*:|-moz-binding/' => __( 'behavior and -moz-binding are not accepted.', 'csd-site-styles' ),
-		'/progid\s*:/'                                => __( 'progid filters are not accepted.', 'csd-site-styles' ),
-		'/(?:image-set|image|src|element|cross-fade|paint)\s*\(/' => __( 'image-set(), image(), src(), element(), cross-fade() and paint() are not accepted.', 'csd-site-styles' ),
+		'/expression\s*\(/'                           => __( 'expression() is not accepted.', 'clearstyle' ),
+		'/(?:javascript|vbscript)\s*:/'               => __( 'Script addresses are not accepted.', 'clearstyle' ),
+		'/(?<![a-z0-9.#-])behavior\s*:|-moz-binding/' => __( 'behavior and -moz-binding are not accepted.', 'clearstyle' ),
+		'/progid\s*:/'                                => __( 'progid filters are not accepted.', 'clearstyle' ),
+		'/(?:image-set|image|src|element|cross-fade|paint)\s*\(/' => __( 'image-set(), image(), src(), element(), cross-fade() and paint() are not accepted.', 'clearstyle' ),
 	);
 	foreach ( $patterns as $pattern => $message ) {
 		$hit = preg_match( $pattern, $spaced );
 		if ( false === $hit ) {
-			$errors[] = __( 'The CSS could not be checked.', 'csd-site-styles' );
+			$errors[] = __( 'The CSS could not be checked.', 'clearstyle' );
 		} elseif ( 1 === $hit ) {
 			$errors[] = $message;
 		}
@@ -340,7 +340,7 @@ function csd_site_styles_validate_css( $css ) {
 	// Every url( in the text must be one the scanner read as a url() token; a url( that only appears once escapes are decoded is refused.
 	// The count takes every occurrence, whatever comes before it, so an escape that runs into a real url( cannot hide another one.
 	if ( substr_count( $plain, 'url(' ) !== count( $scan['urls'] ) ) {
-		$errors[] = __( 'A url() is written in a way the plugin cannot read.', 'csd-site-styles' );
+		$errors[] = __( 'A url() is written in a way the plugin cannot read.', 'clearstyle' );
 	}
 
 	foreach ( $scan['urls'] as $arg ) {
@@ -349,7 +349,7 @@ function csd_site_styles_validate_css( $css ) {
 		$data = 1 === preg_match( '#^data:image/(?:svg\+xml|png|jpeg|jpg|gif|webp|avif)[;,]#', $head );
 		$frag = 1 === preg_match( '/^#[a-z0-9_-]+$/i', $arg );
 		if ( ! $data && ! $frag ) {
-			$errors[] = __( 'Only url() addresses that start with data:image/, or that point to a fragment such as #name, are accepted.', 'csd-site-styles' );
+			$errors[] = __( 'Only url() addresses that start with data:image/, or that point to a fragment such as #name, are accepted.', 'clearstyle' );
 			break;
 		}
 	}

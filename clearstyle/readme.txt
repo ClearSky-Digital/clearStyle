@@ -1,10 +1,10 @@
-=== CSD Site Styles ===
+=== ClearStyle ===
 Contributors: clearskydigital
 Tags: block styles, block patterns, custom css, gutenberg
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.5.2
+Stable tag: 1.6.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,9 +12,9 @@ Block style names, block patterns and a settings page for pages built from WordP
 
 == Description ==
 
-CSD Site Styles registers 24 block style names (for example "CSD Card" and "CSD Hero band") and eight block patterns written as plain block markup. It ships no CSS, fonts or artwork.
+ClearStyle registers 24 block style names (for example "CSD Card" and "CSD Hero band") and eight block patterns written as plain block markup. It ships no CSS, fonts or artwork.
 
-Open Settings, CSD Site Styles. Upload a .css file or paste CSS, and save it. The plugin prints that CSS on pages that use the `csd-page` class and in the block editor. The same page shows a gallery of every block style, pattern and block, with and without your CSS, so you can see the result before you open a real page.
+Open Settings, ClearStyle. Upload a .css file or paste CSS, and save it. The plugin prints that CSS on pages that use the `csd-page` class and in the block editor. The same page shows a gallery of every block style, pattern and block, with and without your CSS, so you can see the result before you open a real page.
 
 The CSS is checked before it is saved. Text that contains a less-than sign, `@import`, a `url()` other than a `data:image/` address or a `#fragment`, `expression()`, `javascript:`, `behavior:`, `progid:`, `-moz-binding`, a null character, invalid UTF-8 or unbalanced braces is refused, and the saved CSS stays as it was. The limit is 256 KB. Nothing is repaired: the text that passes is the text that prints.
 
@@ -24,15 +24,15 @@ Your theme loads the fonts; this plugin loads none.
 
 == Installation ==
 
-1. Upload the zip under Plugins, Add New Plugin, Upload Plugin, and activate it. Or unzip it and copy the `csd-site-styles` folder into `wp-content/plugins/`.
-2. Open Settings, CSD Site Styles, choose your CSS file (or paste CSS) and press Save CSS.
-3. In the page editor, give the outer group the class `csd-page`, or insert a pattern from the CSD Site Styles category, which already carries it.
+1. Upload the zip under Plugins, Add New Plugin, Upload Plugin, and activate it. Or unzip it and copy the `clearstyle` folder into `wp-content/plugins/`.
+2. Open Settings, ClearStyle, choose your CSS file (or paste CSS) and press Save CSS.
+3. In the page editor, give the outer group the class `csd-page`, or insert a pattern from the ClearStyle category, which already carries it.
 
 == Frequently Asked Questions ==
 
 = Why do my pages look plain after I activate the plugin? =
 
-The plugin carries no styling. Until you save a CSS file on Settings, CSD Site Styles, pages that use the `csd-page` class show as plain WordPress blocks. A notice on the Dashboard and Plugins screens tells an administrator when no CSS is saved.
+The plugin carries no styling. Until you save a CSS file on Settings, ClearStyle, pages that use the `csd-page` class show as plain WordPress blocks. A notice on the Dashboard and Plugins screens tells an administrator when no CSS is saved.
 
 = Where does my CSS load? =
 
@@ -62,11 +62,19 @@ Deleting it from the Plugins screen removes the saved CSS and any waiting messag
 
 No. The plugin makes no outside requests, sets no cookies and does no tracking. The gallery frame is sandboxed and cannot load anything except the WordPress block library stylesheet and inline `data:` images.
 
+= I use CSD Site Styles. How do I switch to ClearStyle? =
+
+ClearStyle is the new name of CSD Site Styles, and WordPress installs it as a separate plugin. Install ClearStyle, deactivate CSD Site Styles, then activate ClearStyle. It reads the same saved option, so your CSS carries over and your pages look the same. Keep the two from running together: activate ClearStyle only after CSD Site Styles is deactivated. Check one page first, and delete CSD Site Styles afterwards. Deleting it removes the shared saved CSS, and you would then save your CSS file again on the ClearStyle settings page.
+
 = Where do I get new versions and help? =
 
-Download `csd-site-styles-<version>.zip` from the Releases page of https://github.com/ClearSky-Digital/csd-site-styles (not "Source code (zip)"), and watch the repository for new releases. Support is best effort, with no promised response times. Open an issue there with questions.
+Download `clearstyle-<version>.zip` from the Releases page of https://github.com/ClearSky-Digital/clearstyle (not "Source code (zip)"), and watch the repository for new releases. Support is best effort, with no promised response times. Open an issue there with questions.
 
 == Changelog ==
+
+= 1.6.0 =
+* Renamed from CSD Site Styles; saved settings carry over.
+* The plugin folder, main file, slug and text domain are now clearstyle. Option names, hooks and function names are unchanged.
 
 = 1.5.2 =
 * On a multisite network, saving or clearing CSS now also needs the edit_css capability (as core's Additional CSS does), so only super admins can do it. A single site is unchanged.
@@ -86,6 +94,9 @@ Download `csd-site-styles-<version>.zip` from the Releases page of https://githu
 
 == Upgrade Notice ==
 
+= 1.6.0 =
+ClearStyle is the new name of CSD Site Styles and installs as its own plugin. Deactivate CSD Site Styles, then activate ClearStyle, and your saved CSS carries over.
+
 = 1.5.2 =
 On a multisite network only super admins can save CSS from now on. A single site is unchanged.
 
@@ -93,4 +104,4 @@ On a multisite network only super admins can save CSS from now on. A single site
 Adds photo band, photo tile and icon badge styles and two patterns. They carry no styling; add rules for them to your saved CSS. The editor labels of the Light and Dark band styles now read Plain band and Accent band; the class names are unchanged, so existing pages are not affected.
 
 = 1.5.0 =
-This version carries no styling. After you update, open Settings, CSD Site Styles and save your CSS file, or pages that use csd-page lose their look.
+This version carries no styling. After you update, open Settings, ClearStyle and save your CSS file, or pages that use csd-page lose their look.

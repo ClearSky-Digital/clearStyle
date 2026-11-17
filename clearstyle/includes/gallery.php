@@ -6,11 +6,11 @@
  * The frame holds the saved CSS, so the gallery is a preview of what pages will look like. With no saved CSS, or with the plain link, it shows the blocks as WordPress prints them.
  * The frame is sandboxed: nothing inside it can run a script.
  *
- * CSD Site Styles is free software; you can redistribute it and/or modify it under the terms of the
+ * ClearStyle is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
- * CSD Site Styles is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * ClearStyle is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  *
@@ -19,7 +19,7 @@
  *
  * Copyright (C) 2026 ClearSky Digital LLC (https://cscloud.digital)
  *
- * @package CSD_Site_Styles
+ * @package ClearStyle
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -60,7 +60,7 @@ function csd_site_styles_gallery_sample( $block, $name, $label ) {
 
 	switch ( $block ) {
 		case 'core/cover':
-			return csd_site_styles_gallery_add_photos( '<!-- wp:cover {"dimRatio":0,"className":"' . esc_attr( $class ) . '"} --><div class="wp-block-cover ' . esc_attr( $class ) . '"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-0 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:heading {"level":3} --><h3 class="wp-block-heading">' . $text . '</h3><!-- /wp:heading --><!-- wp:paragraph --><p>' . esc_html__( 'Sample text over the photo.', 'csd-site-styles' ) . '</p><!-- /wp:paragraph --></div></div><!-- /wp:cover -->' );
+			return csd_site_styles_gallery_add_photos( '<!-- wp:cover {"dimRatio":0,"className":"' . esc_attr( $class ) . '"} --><div class="wp-block-cover ' . esc_attr( $class ) . '"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-0 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:heading {"level":3} --><h3 class="wp-block-heading">' . $text . '</h3><!-- /wp:heading --><!-- wp:paragraph --><p>' . esc_html__( 'Sample text over the photo.', 'clearstyle' ) . '</p><!-- /wp:paragraph --></div></div><!-- /wp:cover -->' );
 		case 'core/image':
 			return '<!-- wp:image {"className":"' . esc_attr( $class ) . '"} --><figure class="wp-block-image ' . esc_attr( $class ) . '"><img src="' . esc_attr( csd_site_styles_gallery_placeholder() ) . '" alt=""/></figure><!-- /wp:image -->';
 		case 'core/heading':
@@ -68,11 +68,11 @@ function csd_site_styles_gallery_sample( $block, $name, $label ) {
 		case 'core/paragraph':
 			return '<!-- wp:paragraph {"className":"' . esc_attr( $class ) . '"} --><p class="' . esc_attr( $class ) . '"><a href="#">' . $text . '</a></p><!-- /wp:paragraph -->';
 		case 'core/list':
-			return '<!-- wp:list {"className":"' . esc_attr( $class ) . '"} --><ul class="wp-block-list ' . esc_attr( $class ) . '"><li>' . $text . '</li><li>' . esc_html__( 'A second item', 'csd-site-styles' ) . '</li></ul><!-- /wp:list -->';
+			return '<!-- wp:list {"className":"' . esc_attr( $class ) . '"} --><ul class="wp-block-list ' . esc_attr( $class ) . '"><li>' . $text . '</li><li>' . esc_html__( 'A second item', 'clearstyle' ) . '</li></ul><!-- /wp:list -->';
 		case 'core/quote':
-			return '<!-- wp:quote {"className":"' . esc_attr( $class ) . '"} --><blockquote class="wp-block-quote ' . esc_attr( $class ) . '"><p>' . $text . '</p><cite>' . esc_html__( 'Source', 'csd-site-styles' ) . '</cite></blockquote><!-- /wp:quote -->';
+			return '<!-- wp:quote {"className":"' . esc_attr( $class ) . '"} --><blockquote class="wp-block-quote ' . esc_attr( $class ) . '"><p>' . $text . '</p><cite>' . esc_html__( 'Source', 'clearstyle' ) . '</cite></blockquote><!-- /wp:quote -->';
 		default:
-			return '<!-- wp:group {"className":"' . esc_attr( $class ) . '"} --><div class="wp-block-group ' . esc_attr( $class ) . '"><!-- wp:heading {"level":3} --><h3 class="wp-block-heading">' . $text . '</h3><!-- /wp:heading --><!-- wp:paragraph --><p>' . esc_html__( 'Sample text inside the block.', 'csd-site-styles' ) . '</p><!-- /wp:paragraph --></div><!-- /wp:group -->';
+			return '<!-- wp:group {"className":"' . esc_attr( $class ) . '"} --><div class="wp-block-group ' . esc_attr( $class ) . '"><!-- wp:heading {"level":3} --><h3 class="wp-block-heading">' . $text . '</h3><!-- /wp:heading --><!-- wp:paragraph --><p>' . esc_html__( 'Sample text inside the block.', 'clearstyle' ) . '</p><!-- /wp:paragraph --></div><!-- /wp:group -->';
 	}
 }
 
@@ -146,7 +146,7 @@ function csd_site_styles_gallery_core_blocks() {
 function csd_site_styles_gallery_document( $css ) {
 	$body = '';
 
-	$body .= '<h2>' . esc_html__( 'Block styles', 'csd-site-styles' ) . '</h2>';
+	$body .= '<h2>' . esc_html__( 'Block styles', 'clearstyle' ) . '</h2>';
 	foreach ( csd_site_styles_gallery_styles() as $block => $list ) {
 		$body .= '<h3>' . esc_html( $block ) . '</h3>';
 		foreach ( $list as $name => $label ) {
@@ -154,20 +154,20 @@ function csd_site_styles_gallery_document( $css ) {
 		}
 	}
 
-	$body .= '<h2>' . esc_html__( 'Patterns', 'csd-site-styles' ) . '</h2>';
+	$body .= '<h2>' . esc_html__( 'Patterns', 'clearstyle' ) . '</h2>';
 	$reg   = WP_Block_Patterns_Registry::get_instance();
 	foreach ( $reg->get_all_registered() as $pattern ) {
-		if ( 0 === strpos( $pattern['name'], 'csd-site-styles/' ) ) {
+		if ( 0 === strpos( $pattern['name'], 'clearstyle/' ) ) {
 			$body .= '<h3>' . esc_html( $pattern['title'] ) . '</h3>' . do_blocks( csd_site_styles_gallery_add_photos( $pattern['content'] ) );
 		}
 	}
 
-	$body .= '<h2>' . esc_html__( 'Core blocks by type', 'csd-site-styles' ) . '</h2>' . do_blocks( csd_site_styles_gallery_core_blocks() );
+	$body .= '<h2>' . esc_html__( 'Core blocks by type', 'clearstyle' ) . '</h2>' . do_blocks( csd_site_styles_gallery_core_blocks() );
 
-	$body  .= '<h2>' . esc_html__( 'Custom blocks', 'csd-site-styles' ) . '</h2>';
+	$body  .= '<h2>' . esc_html__( 'Custom blocks', 'clearstyle' ) . '</h2>';
 	$custom = csd_site_styles_gallery_custom_blocks();
 	if ( empty( $custom ) ) {
-		$body .= '<p>' . esc_html__( 'This plugin registers no custom blocks yet.', 'csd-site-styles' ) . '</p>';
+		$body .= '<p>' . esc_html__( 'This plugin registers no custom blocks yet.', 'clearstyle' ) . '</p>';
 	} else {
 		foreach ( $custom as $name ) {
 			$body .= '<h3>' . esc_html( $name ) . '</h3>' . do_blocks( '<!-- wp:' . $name . ' /-->' );
@@ -197,7 +197,7 @@ function csd_site_styles_gallery_document( $css ) {
  * @param bool $has_css Whether any CSS is saved.
  */
 function csd_site_styles_render_gallery_section( $has_css ) {
-	$page  = 'options-general.php?page=csd-site-styles';
+	$page  = 'options-general.php?page=clearstyle';
 	$plain = isset( $_GET['csd_plain'] ) && '1' === $_GET['csd_plain']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only display switch, compared with a fixed value.
 	$phone = isset( $_GET['csd_view'] ) && 'phone' === $_GET['csd_view']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only display switch, compared with a fixed value.
 
@@ -208,35 +208,35 @@ function csd_site_styles_render_gallery_section( $has_css ) {
 		return esc_url( admin_url( add_query_arg( $args, $page ) ) );
 	};
 	?>
-	<h2><?php echo esc_html__( 'Gallery', 'csd-site-styles' ); ?></h2>
+	<h2><?php echo esc_html__( 'Gallery', 'clearstyle' ); ?></h2>
 	<p>
 		<?php
 		if ( $plain || ! $has_css ) {
-			echo esc_html__( 'Showing the blocks without any saved CSS.', 'csd-site-styles' );
+			echo esc_html__( 'Showing the blocks without any saved CSS.', 'clearstyle' );
 		} else {
-			echo esc_html__( 'Showing the blocks with the saved CSS.', 'csd-site-styles' );
+			echo esc_html__( 'Showing the blocks with the saved CSS.', 'clearstyle' );
 		}
 		?>
 	</p>
 	<p>
 		<?php if ( $has_css ) : ?>
 			<?php if ( $plain ) : ?>
-				<a class="button" href="<?php echo $link( $phone ? array( 'csd_view' => 'phone' ) : array() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in $link. ?>"><?php echo esc_html__( 'Show with the saved CSS', 'csd-site-styles' ); ?></a>
+				<a class="button" href="<?php echo $link( $phone ? array( 'csd_view' => 'phone' ) : array() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in $link. ?>"><?php echo esc_html__( 'Show with the saved CSS', 'clearstyle' ); ?></a>
 			<?php else : ?>
-				<a class="button" href="<?php echo $link( array_merge( array( 'csd_plain' => '1' ), $phone ? array( 'csd_view' => 'phone' ) : array() ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in $link. ?>"><?php echo esc_html__( 'Show without the saved CSS', 'csd-site-styles' ); ?></a>
+				<a class="button" href="<?php echo $link( array_merge( array( 'csd_plain' => '1' ), $phone ? array( 'csd_view' => 'phone' ) : array() ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in $link. ?>"><?php echo esc_html__( 'Show without the saved CSS', 'clearstyle' ); ?></a>
 			<?php endif; ?>
 		<?php endif; ?>
 		<?php
 		$keep = $plain ? array( 'csd_plain' => '1' ) : array();
 		if ( $phone ) :
 			?>
-			<a class="button" href="<?php echo $link( $keep ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in $link. ?>"><?php echo esc_html__( 'Wide view', 'csd-site-styles' ); ?></a>
+			<a class="button" href="<?php echo $link( $keep ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in $link. ?>"><?php echo esc_html__( 'Wide view', 'clearstyle' ); ?></a>
 		<?php else : ?>
-			<a class="button" href="<?php echo $link( array_merge( $keep, array( 'csd_view' => 'phone' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in $link. ?>"><?php echo esc_html__( 'Phone view', 'csd-site-styles' ); ?></a>
+			<a class="button" href="<?php echo $link( array_merge( $keep, array( 'csd_view' => 'phone' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in $link. ?>"><?php echo esc_html__( 'Phone view', 'clearstyle' ); ?></a>
 		<?php endif; ?>
 	</p>
 	<iframe
-		title="<?php echo esc_attr__( 'Gallery of the plugin blocks', 'csd-site-styles' ); ?>"
+		title="<?php echo esc_attr__( 'Gallery of the plugin blocks', 'clearstyle' ); ?>"
 		sandbox=""
 		width="<?php echo $phone ? '390' : '100%'; ?>"
 		height="900"

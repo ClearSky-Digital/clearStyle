@@ -4,13 +4,13 @@
  * Needs PHP 7.4 or later. WordPress is not needed: the few functions the checks call are stubbed here.
  * Usage: php tests/sanitizer-test.php
  *
- * This file is part of CSD Site Styles.
+ * This file is part of ClearStyle.
  *
- * CSD Site Styles is free software; you can redistribute it and/or modify it under the terms of the
+ * ClearStyle is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
- * CSD Site Styles is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * ClearStyle is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  *
@@ -23,7 +23,7 @@
 define( 'ABSPATH', '/' );
 function __( $s ) { return $s; }
 function number_format_i18n( $n ) { return (string) $n; }
-require dirname( __DIR__ ) . '/csd-site-styles/includes/css-sanitizer.php';
+require dirname( __DIR__ ) . '/clearstyle/includes/css-sanitizer.php';
 
 $cases = array(
 	// name => array( css, expected ok )

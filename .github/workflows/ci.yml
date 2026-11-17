@@ -31,7 +31,7 @@ jobs:
           coverage: none
           tools: none
       - name: php -l on every PHP file
-        run: find csd-site-styles tests -name '*.php' -print0 | xargs -0 -n1 php -l
+        run: find clearstyle tests -name '*.php' -print0 | xargs -0 -n1 php -l
 
   phpcs:
     name: PHPCS (WordPress standards)

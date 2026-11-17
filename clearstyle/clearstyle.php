@@ -1,22 +1,22 @@
 <?php
 /**
- * Plugin Name:       CSD Site Styles
- * Plugin URI:        https://github.com/ClearSky-Digital/csd-site-styles
+ * Plugin Name:       ClearStyle
+ * Plugin URI:        https://github.com/ClearSky-Digital/clearstyle
  * Description:       Block style names, block patterns and a settings page for pages built from WordPress's own blocks. The plugin carries no styling: the look comes from a CSS file you save on its settings page.
- * Version:           1.5.2
+ * Version:           1.6.0
  * Requires at least: 6.9
  * Requires PHP:      7.4
  * Author:            ClearSky Digital
  * Author URI:        https://cscloud.digital
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       csd-site-styles
+ * Text Domain:       clearstyle
  *
- * CSD Site Styles is free software; you can redistribute it and/or modify it under the terms of the
+ * ClearStyle is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
- * CSD Site Styles is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * ClearStyle is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  *
@@ -25,14 +25,14 @@
  *
  * Copyright (C) 2026 ClearSky Digital LLC (https://cscloud.digital)
  *
- * @package CSD_Site_Styles
+ * @package ClearStyle
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CSD_SITE_STYLES_VERSION', '1.5.2' );
+define( 'CSD_SITE_STYLES_VERSION', '1.6.0' );
 define( 'CSD_SITE_STYLES_OPTION', 'csd_site_styles_config' );
 
 require_once plugin_dir_path( __FILE__ ) . 'includes/patterns.php';

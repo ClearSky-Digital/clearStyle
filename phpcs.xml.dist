@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<ruleset name="CSD Site Styles">
-	<description>WordPress coding standards for the CSD Site Styles plugin. Warnings are reported but do not fail the build; errors do.</description>
+<ruleset name="ClearStyle">
+	<description>WordPress coding standards for the ClearStyle plugin. Warnings are reported but do not fail the build; errors do.</description>
 
-	<file>csd-site-styles</file>
+	<file>clearstyle</file>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 
 	<arg name="extensions" value="php"/>
@@ -19,7 +19,7 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element value="csd-site-styles"/>
+				<element value="clearstyle"/>
 			</property>
 		</properties>
 	</rule>

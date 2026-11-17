@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2026 ClearSky Digital
-"""Build the release zip of the CSD Site Styles plugin and check it.
+"""Build the release zip of the ClearStyle plugin and check it.
 
-The zip holds only the csd-site-styles/ plugin folder (the folder name is the plugin slug, so it unpacks to wp-content/plugins/csd-site-styles/).
+The zip holds only the clearstyle/ plugin folder (the folder name is the plugin slug, so it unpacks to wp-content/plugins/clearstyle/).
 Examples, tests, workflows and other development files are not included.
 
 Usage (from anywhere, Python 3.8 or later, no packages needed):
-  python3 bin/build-zip.py                      builds dist/csd-site-styles-<version>.zip
+  python3 bin/build-zip.py                      builds dist/clearstyle-<version>.zip
   python3 bin/build-zip.py --tag v1.5.1         also fails unless the tag matches the version in the plugin
   python3 bin/build-zip.py --out some/folder    puts the zip in another folder
 
@@ -26,7 +26,7 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SLUG = "csd-site-styles"
+SLUG = "clearstyle"
 PLUGIN = ROOT / SLUG
 ALLOWED_SUFFIXES = {".php", ".html", ".txt"}
 
@@ -37,7 +37,7 @@ def fail(message):
 
 
 def header_version():
-    text = (PLUGIN / "csd-site-styles.php").read_text(encoding="utf-8")
+    text = (PLUGIN / "clearstyle.php").read_text(encoding="utf-8")
     m = re.search(r"^\s*\*\s*Version:\s*(\S+)\s*$", text, re.M)
     if not m:
         fail("no Version line in the plugin header")
@@ -76,7 +76,7 @@ def main():
     bad = [f for f in files if Path(f).suffix.lower() not in ALLOWED_SUFFIXES or any(part.startswith(".") for part in f.split("/"))]
     if bad:
         fail("files that do not belong in the plugin zip (the plugin ships no styling, scripts or images): " + ", ".join(bad))
-    for need in ("csd-site-styles.php", "readme.txt", "license.txt", "uninstall.php"):
+    for need in ("clearstyle.php", "readme.txt", "license.txt", "uninstall.php"):
         if need not in files:
             fail("missing " + need)
 
@@ -105,7 +105,7 @@ def main():
             fail("the zip has a directory entry")
         if any(z.read(n) != (PLUGIN / n[len(SLUG) + 1:]).read_bytes() for n in names):
             fail("an entry's bytes differ from the plugin folder")
-        main = z.read(f"{SLUG}/csd-site-styles.php").decode("utf-8")
+        main = z.read(f"{SLUG}/clearstyle.php").decode("utf-8")
         if not re.search(r"^\s*\*\s*Version:\s*" + re.escape(version) + r"\s*$", main, re.M):
             fail("the plugin header inside the zip does not read Version " + version)
         listing = [(i.filename, i.file_size) for i in z.infolist()]

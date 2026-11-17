@@ -1,6 +1,13 @@
 # Changelog
 
-All notable changes to CSD Site Styles are listed here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
+All notable changes to ClearStyle (formerly CSD Site Styles) are listed here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
+
+## [1.6.0] - 2026-11-17
+
+### Changed
+- Renamed from CSD Site Styles; saved settings carry over.
+- The plugin folder, main file, slug and text domain are now `clearstyle`, the settings page is Settings, ClearStyle, and the release zip is `clearstyle-<version>.zip`.
+- Every option name, hook name and function prefix (`csd_site_styles_*`) is unchanged, so a site that ran CSD Site Styles keeps its saved CSS after it switches. To switch, deactivate CSD Site Styles and activate ClearStyle.
 
 ## [1.5.2] - 2026-11-17
 

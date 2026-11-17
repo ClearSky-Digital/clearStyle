@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2026 ClearSky Digital
-"""Render check for a CSD Site Styles stylesheet (default: examples/demo-site.css).
+"""Render check for a ClearStyle stylesheet (default: examples/demo-site.css).
 
 It draws the plugin's gallery content (every registered block style, the eight patterns and the core blocks) with the stylesheet in a
 headless Chromium, at 1440 and 390 pixels wide, and reports:
   - sideways overflow of the page,
   - text that is below WCAG AA contrast (4.5 to 1, or 3 to 1 for large text) against the background it sits on,
   - text that is invisible.
-The block styles are read from csd-site-styles/includes/block-styles.php and the patterns from csd-site-styles/patterns/, so a new style
+The block styles are read from clearstyle/includes/block-styles.php and the patterns from clearstyle/patterns/, so a new style
 or pattern is picked up without editing this script. The check fails when the plugin does not register 24 block styles and 8 patterns.
 
 It is a static page, not WordPress: block markup is written out as WordPress prints it, and the block library stylesheet is optional.
@@ -29,7 +29,7 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parent.parent
-PLUGIN = ROOT / "csd-site-styles"
+PLUGIN = ROOT / "clearstyle"
 
 # Used only when no block library stylesheet is given: the few layout rules the blocks need to be drawn sensibly.
 FALLBACK_LIBRARY = (
@@ -196,7 +196,7 @@ def main():
     styles = registered_styles()
     n_styles = sum(len(v) for v in styles.values())
     n_patterns = len(list((PLUGIN / "patterns").glob("*.html")))
-    lines = [f"CSD Site Styles render check: {a.css}", f"css bytes: {len(css.encode('utf-8'))}",
+    lines = [f"ClearStyle render check: {a.css}", f"css bytes: {len(css.encode('utf-8'))}",
              f"registered block styles: {n_styles}, patterns: {n_patterns}",
              "Block library stylesheet: " + (a.block_css if a.block_css else "not given (fallback layout rules)"), ""]
     bad = 0

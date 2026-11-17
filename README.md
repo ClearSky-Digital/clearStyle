@@ -1,10 +1,10 @@
-# CSD Site Styles
+# ClearStyle
 
 Copyright (C) 2026 ClearSky Digital LLC (https://cscloud.digital)
 
-[![CI](https://github.com/ClearSky-Digital/csd-site-styles/actions/workflows/ci.yml/badge.svg)](https://github.com/ClearSky-Digital/csd-site-styles/actions/workflows/ci.yml)
+[![CI](https://github.com/ClearSky-Digital/clearstyle/actions/workflows/ci.yml/badge.svg)](https://github.com/ClearSky-Digital/clearstyle/actions/workflows/ci.yml)
 
-CSD Site Styles helps you build pages from WordPress's own blocks. It adds 24 block styles and eight ready-made patterns, and it gives you a settings page where you save your own CSS. The plugin leaves all styling to a CSS file you control, so the look of your pages is yours to set.
+ClearStyle helps you build pages from WordPress's own blocks. It adds 24 block styles and eight ready-made patterns, and it gives you a settings page where you save your own CSS. The plugin leaves all styling to a CSS file you control, so the look of your pages is yours to set.
 
 - Requires WordPress 6.9 or later and PHP 7.4 or later.
 - License: GPL-2.0-or-later.
@@ -13,9 +13,9 @@ Built and maintained by [ClearSky Digital](https://cscloud.digital).
 
 ## Getting the plugin and updates
 
-The project lives at https://github.com/ClearSky-Digital/csd-site-styles and is free to use.
+The project lives at https://github.com/ClearSky-Digital/clearstyle and is free to use.
 
-- Download the plugin from the [Releases page](https://github.com/ClearSky-Digital/csd-site-styles/releases) of this repository. Pick the zip named `csd-site-styles-<version>.zip`. Do not pick "Source code (zip)"; that is the whole project, and WordPress cannot install it. Each release also lists a `.sha256` file, which a technical person can use to confirm the download is intact. You can ignore it.
+- Download the plugin from the [Releases page](https://github.com/ClearSky-Digital/clearstyle/releases) of this repository. Pick the zip named `clearstyle-<version>.zip`. Do not pick "Source code (zip)"; that is the whole project, and WordPress cannot install it. Each release also lists a `.sha256` file, which a technical person can use to confirm the download is intact. You can ignore it.
 - To hear about new versions, **watch** the repository: Watch, then Custom, then tick Releases.
 
 The zip from the Releases page is ready to install.
@@ -26,7 +26,7 @@ For help with the plugin, open an issue on this repository. Support is best effo
 
 - Adds 24 block styles to the Styles panel. When you pick one, WordPress adds a class such as `is-style-csd-card` to the block.
 - Adds eight block patterns (an opening band, a split section, a band with three cards, and so on) written as plain block markup.
-- Adds a settings page under Settings, then CSD Site Styles. You upload a `.css` file or paste CSS there. The plugin checks it, saves it and prints it on your pages.
+- Adds a settings page under Settings, then ClearStyle. You upload a `.css` file or paste CSS there. The plugin checks it, saves it and prints it on your pages.
 - Shows a gallery under the form. It draws every block style, pattern and core block with your saved CSS, so you can see the result before you open a real page.
 
 The plugin ships no stylesheet, fonts, colors or artwork. Until you save CSS, pages show as plain WordPress blocks, and an administrator sees a notice on the Dashboard and Plugins screens.
@@ -35,22 +35,22 @@ The plugin ships no stylesheet, fonts, colors or artwork. Until you save CSS, pa
 
 **With the zip (the usual way)**
 
-1. Download `csd-site-styles-<version>.zip` from the Releases page (not "Source code (zip)").
+1. Download `clearstyle-<version>.zip` from the Releases page (not "Source code (zip)").
 2. In WordPress, go to Plugins, Add New Plugin, Upload Plugin. Choose the zip and press Install Now.
 3. Press Activate.
 
 **By hand**
 
-1. Unzip the download. You get one folder named `csd-site-styles`.
+1. Unzip the download. You get one folder named `clearstyle`.
 2. Copy that folder into `wp-content/plugins/` on your site.
 3. Activate the plugin on the Plugins screen.
 
 ## Use it
 
-1. Open Settings, CSD Site Styles.
+1. Open Settings, ClearStyle.
 2. Choose a CSS file, or paste CSS into the text box, and press **Save CSS**. A good first file is `examples/demo-site.css` from this repository (see below).
 3. Look at the gallery under the form. The buttons above it switch between "Show without the saved CSS" and "Show with the saved CSS", and between "Phone view" and "Wide view".
-4. On a page, either insert one of the patterns from the CSD Site Styles category (they already carry the class `csd-page`), or select the outer Group block, open Advanced in the block settings, and type `csd-page` in Additional CSS class(es). Then pick a style for each block in its Styles panel.
+4. On a page, either insert one of the patterns from the ClearStyle category (they already carry the class `csd-page`), or select the outer Group block, open Advanced in the block settings, and type `csd-page` in Additional CSS class(es). Then pick a style for each block in its Styles panel.
 
 Your CSS prints only on a single page or post whose content contains `csd-page`, and in the block editor, so the editor shows the page as visitors will see it. Nothing prints on other pages. The class must be in the page's own content. A band placed in a theme template or a widget area does not switch the CSS on. A developer can switch it on elsewhere with the filter `csd_site_styles_should_load`, for example for a template that carries the class.
 
@@ -133,7 +133,7 @@ The plugin loads no fonts, and the settings page refuses `@import` and font addr
 ## FAQ
 
 **Why do my pages look plain after I activate it?**
-The plugin carries no styling. Save a CSS file on Settings, CSD Site Styles. Until then pages that use `csd-page` show as plain blocks.
+The plugin carries no styling. Save a CSS file on Settings, ClearStyle. Until then pages that use `csd-page` show as plain blocks.
 
 **Does it work on multisite?**
 The CSS is stored in one option for each site, so each site saves its own. Deleting the plugin removes the option from every site. The settings page needs the `manage_options` capability. On a network, a site administrator who lacks the `unfiltered_html` capability can still save CSS here, so consider who has administrator access.
@@ -143,6 +143,9 @@ One option, `csd_site_styles_config`: the CSS, the time it was saved and the ID 
 
 **What happens when I uninstall it?**
 Deleting the plugin from the Plugins screen removes the saved CSS and any waiting message. Deactivating alone keeps the CSS.
+
+**I use CSD Site Styles. How do I switch to ClearStyle?**
+ClearStyle is the new name of CSD Site Styles, and WordPress installs it as a separate plugin. Install ClearStyle, deactivate CSD Site Styles, then activate ClearStyle. It reads the same saved option, so your CSS carries over and your pages look the same. Keep the two from running together: activate ClearStyle only after CSD Site Styles is deactivated. Check one page first, and delete CSD Site Styles afterwards. Deleting it removes the shared saved CSS, and you would then save your CSS file again on the ClearStyle settings page.
 
 **Does it collect data or contact other sites?**
 No. It makes no outside requests, sets no cookies and does no tracking. The gallery frame is sandboxed. It can load only WordPress's own block library stylesheet from your site and inline `data:` images.
@@ -155,7 +158,7 @@ Yes. Choose the photo in the Cover block. Photos you add in the editor are ordin
 These notes are for developers; skip them to use the plugin.
 
 ```
-csd-site-styles/   the plugin (this folder becomes the release zip)
+clearstyle/   the plugin (this folder becomes the release zip)
 examples/          demo-site.css, a neutral example stylesheet
 tests/             the sanitizer test and the render check
 bin/build-zip.py   builds the release zip
@@ -166,7 +169,7 @@ Run the checks locally:
 ```
 php tests/sanitizer-test.php                   # needs PHP 7.4 or later, no WordPress
 composer install && vendor/bin/phpcs           # WordPress coding standards
-python3 bin/build-zip.py                       # writes dist/csd-site-styles-<version>.zip
+python3 bin/build-zip.py                       # writes dist/clearstyle-<version>.zip
 python3 -m pip install playwright && python3 -m playwright install chromium
 python3 tests/render_check.py                  # draws the gallery with examples/demo-site.css
 ```
@@ -185,4 +188,4 @@ GPL-2.0-or-later. See [LICENSE](LICENSE). You may use, change and pass on copies
 
 ---
 
-CSD Site Styles is made and maintained by ClearSky Digital.
+ClearStyle is made and maintained by ClearSky Digital.
