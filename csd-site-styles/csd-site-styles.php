@@ -7,6 +7,7 @@
  * Requires at least: 6.9
  * Requires PHP:      7.4
  * Author:            ClearSky Digital
+ * Author URI:        https://cscloud.digital
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       csd-site-styles
@@ -22,7 +23,7 @@
  * You should have received a copy of the GNU General Public License along with this program; if not,
  * see <https://www.gnu.org/licenses/>.
  *
- * Copyright (C) 2026 ClearSky Digital
+ * Copyright (C) 2026 ClearSky Digital LLC (https://cscloud.digital)
  *
  * @package CSD_Site_Styles
  */

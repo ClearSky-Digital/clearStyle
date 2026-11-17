@@ -1,11 +1,15 @@
 # CSD Site Styles
 
+Copyright (C) 2026 ClearSky Digital LLC (https://cscloud.digital)
+
 [![CI](https://github.com/gcollins808/csd-site-styles/actions/workflows/ci.yml/badge.svg)](https://github.com/gcollins808/csd-site-styles/actions/workflows/ci.yml)
 
 CSD Site Styles helps you build pages from WordPress's own blocks. It adds 24 block styles and eight ready-made patterns, and it gives you a settings page where you save your own CSS. The plugin leaves all styling to a CSS file you control, so the look of your pages is yours to set.
 
 - Requires WordPress 6.9 or later and PHP 7.4 or later.
 - License: GPL-2.0-or-later.
+
+Built and maintained by [ClearSky Digital](https://cscloud.digital).
 
 ## Getting the plugin and updates
 
