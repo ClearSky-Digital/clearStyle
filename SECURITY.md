@@ -4,7 +4,7 @@
 
 Please report a security problem privately, and please do not post details in a public issue.
 
-Open the [Security tab](https://github.com/gcollins808/csd-site-styles/security/advisories/new) of this repository and choose **Report a vulnerability**. This creates a private security advisory that only the maintainer can see, through GitHub's private vulnerability reporting.
+Open the [Security tab](https://github.com/ClearSky-Digital/csd-site-styles/security/advisories/new) of this repository and choose **Report a vulnerability**. This creates a private security advisory that only the maintainer can see, through GitHub's private vulnerability reporting.
 
 Please include the plugin version, the WordPress and PHP versions, and steps to reproduce.
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       CSD Site Styles
- * Plugin URI:        https://github.com/gcollins808/csd-site-styles
+ * Plugin URI:        https://github.com/ClearSky-Digital/csd-site-styles
  * Description:       Block style names, block patterns and a settings page for pages built from WordPress's own blocks. The plugin carries no styling: the look comes from a CSS file you save on its settings page.
  * Version:           1.5.2
  * Requires at least: 6.9

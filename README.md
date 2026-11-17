@@ -2,7 +2,7 @@
 
 Copyright (C) 2026 ClearSky Digital LLC (https://cscloud.digital)
 
-[![CI](https://github.com/gcollins808/csd-site-styles/actions/workflows/ci.yml/badge.svg)](https://github.com/gcollins808/csd-site-styles/actions/workflows/ci.yml)
+[![CI](https://github.com/ClearSky-Digital/csd-site-styles/actions/workflows/ci.yml/badge.svg)](https://github.com/ClearSky-Digital/csd-site-styles/actions/workflows/ci.yml)
 
 CSD Site Styles helps you build pages from WordPress's own blocks. It adds 24 block styles and eight ready-made patterns, and it gives you a settings page where you save your own CSS. The plugin leaves all styling to a CSS file you control, so the look of your pages is yours to set.
 
@@ -13,9 +13,9 @@ Built and maintained by [ClearSky Digital](https://cscloud.digital).
 
 ## Getting the plugin and updates
 
-The project lives at https://github.com/gcollins808/csd-site-styles and is free to use.
+The project lives at https://github.com/ClearSky-Digital/csd-site-styles and is free to use.
 
-- Download the plugin from the [Releases page](https://github.com/gcollins808/csd-site-styles/releases) of this repository. Pick the zip named `csd-site-styles-<version>.zip`. Do not pick "Source code (zip)"; that is the whole project, and WordPress cannot install it. Each release also lists a `.sha256` file, which a technical person can use to confirm the download is intact. You can ignore it.
+- Download the plugin from the [Releases page](https://github.com/ClearSky-Digital/csd-site-styles/releases) of this repository. Pick the zip named `csd-site-styles-<version>.zip`. Do not pick "Source code (zip)"; that is the whole project, and WordPress cannot install it. Each release also lists a `.sha256` file, which a technical person can use to confirm the download is intact. You can ignore it.
 - To hear about new versions, **watch** the repository: Watch, then Custom, then tick Releases.
 
 The zip from the Releases page is ready to install.

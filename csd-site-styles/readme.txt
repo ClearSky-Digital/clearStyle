@@ -64,7 +64,7 @@ No. The plugin makes no outside requests, sets no cookies and does no tracking. 
 
 = Where do I get new versions and help? =
 
-Download `csd-site-styles-<version>.zip` from the Releases page of https://github.com/gcollins808/csd-site-styles (not "Source code (zip)"), and watch the repository for new releases. Support is best effort, with no promised response times. Open an issue there with questions.
+Download `csd-site-styles-<version>.zip` from the Releases page of https://github.com/ClearSky-Digital/csd-site-styles (not "Source code (zip)"), and watch the repository for new releases. Support is best effort, with no promised response times. Open an issue there with questions.
 
 == Changelog ==
 
