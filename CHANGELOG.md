@@ -2,6 +2,16 @@
 
 All notable changes to CSD Site Styles are listed here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.5.2] - 2026-11-17
+
+### Changed
+- On a multisite network, saving, clearing and viewing the settings page also need the `edit_css` capability (as core's Additional CSS does), on top of `manage_options`. Only super admins hold it there. A single site is unchanged.
+- A `csd_css_file` field posted as an array is refused with the usual "did not upload" or extension message and raises no PHP warning.
+- Uninstall on a network visits the sites in pages of 100 instead of loading them all at once.
+
+### Noted, not changed
+- `csd_site_styles_should_load()` returns true in the admin when the current screen is not known. The function is hooked to `enqueue_block_assets` only, which runs after the screen is set on the admin screens we checked, and the only effect is printing the same CSS the public site prints, so there is no exposure. Returning false instead would change the block editor behaviour and was not tested, so it is left as it is.
+
 ## [1.5.1] - 2026-11-15
 
 ### Added

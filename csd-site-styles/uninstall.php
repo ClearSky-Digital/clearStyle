@@ -30,16 +30,24 @@ $csd_site_styles_clean = function () {
 };
 
 if ( is_multisite() ) {
-	foreach ( get_sites(
-		array(
-			'fields' => 'ids',
-			'number' => 0,
-		)
-	) as $csd_site_styles_site_id ) {
-		switch_to_blog( $csd_site_styles_site_id );
-		$csd_site_styles_clean();
-		restore_current_blog();
-	}
+	// Walk the network in pages of 100 sites, so a very large network is not loaded in one query.
+	$csd_site_styles_offset = 0;
+	$csd_site_styles_batch  = 100;
+	do {
+		$csd_site_styles_ids = get_sites(
+			array(
+				'fields' => 'ids',
+				'number' => $csd_site_styles_batch,
+				'offset' => $csd_site_styles_offset,
+			)
+		);
+		foreach ( $csd_site_styles_ids as $csd_site_styles_site_id ) {
+			switch_to_blog( $csd_site_styles_site_id );
+			$csd_site_styles_clean();
+			restore_current_blog();
+		}
+		$csd_site_styles_offset += $csd_site_styles_batch;
+	} while ( count( $csd_site_styles_ids ) === $csd_site_styles_batch );
 } else {
 	$csd_site_styles_clean();
 }

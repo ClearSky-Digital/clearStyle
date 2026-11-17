@@ -50,13 +50,25 @@ function csd_site_styles_get_css() {
 }
 
 /**
+ * Whether the current user may view and change the saved CSS.
+ * Needs manage_options. On a multisite network it also needs edit_css, the capability core's Additional CSS asks for,
+ * which only super admins hold, so a site administrator cannot save CSS there. A single site is unchanged.
+ */
+function csd_site_styles_user_can_manage() {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return false;
+	}
+	return ! is_multisite() || current_user_can( 'edit_css' );
+}
+
+/**
  * Add the page under Settings.
  */
 function csd_site_styles_add_menu() {
 	add_options_page(
 		__( 'CSD Site Styles', 'csd-site-styles' ),
 		__( 'CSD Site Styles', 'csd-site-styles' ),
-		'manage_options',
+		is_multisite() ? 'edit_css' : 'manage_options',
 		'csd-site-styles',
 		'csd_site_styles_render_page'
 	);
@@ -68,7 +80,7 @@ add_action( 'admin_menu', 'csd_site_styles_add_menu' );
  * The plugin carries no styling, so until a CSS file is saved pages that use csd-page show as plain blocks.
  */
 function csd_site_styles_no_css_notice() {
-	if ( ! current_user_can( 'manage_options' ) || '' !== csd_site_styles_get_css() ) {
+	if ( ! csd_site_styles_user_can_manage() || '' !== csd_site_styles_get_css() ) {
 		return;
 	}
 	$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
@@ -123,8 +135,9 @@ function csd_site_styles_read_input( &$errors ) {
 
 	if ( $has_file ) {
 		$error = (int) $_FILES['csd_css_file']['error'];
-		$name  = isset( $_FILES['csd_css_file']['name'] ) ? sanitize_file_name( wp_unslash( (string) $_FILES['csd_css_file']['name'] ) ) : '';
-		$tmp   = isset( $_FILES['csd_css_file']['tmp_name'] ) ? (string) $_FILES['csd_css_file']['tmp_name'] : '';
+		// A field posted as an array (csd_css_file[name][]) is not a real upload: treat its parts as empty so nothing is cast from an array.
+		$name  = ( isset( $_FILES['csd_css_file']['name'] ) && is_string( $_FILES['csd_css_file']['name'] ) ) ? sanitize_file_name( wp_unslash( $_FILES['csd_css_file']['name'] ) ) : '';
+		$tmp   = ( isset( $_FILES['csd_css_file']['tmp_name'] ) && is_string( $_FILES['csd_css_file']['tmp_name'] ) ) ? $_FILES['csd_css_file']['tmp_name'] : '';
 		$size  = isset( $_FILES['csd_css_file']['size'] ) ? (int) $_FILES['csd_css_file']['size'] : 0;
 
 		if ( UPLOAD_ERR_OK !== $error ) {
@@ -173,7 +186,7 @@ function csd_site_styles_read_input( &$errors ) {
  * Save the CSS.
  */
 function csd_site_styles_handle_save() {
-	if ( ! current_user_can( 'manage_options' ) ) {
+	if ( ! csd_site_styles_user_can_manage() ) {
 		wp_die( esc_html__( 'You do not have permission to change these settings.', 'csd-site-styles' ), 403 );
 	}
 	// A file larger than the server's post_max_size empties $_POST before WordPress sees it, so the nonce check would show a confusing "link expired" message.
@@ -220,7 +233,7 @@ add_action( 'admin_post_csd_site_styles_save', 'csd_site_styles_handle_save' );
  * Clear the saved CSS.
  */
 function csd_site_styles_handle_clear() {
-	if ( ! current_user_can( 'manage_options' ) ) {
+	if ( ! csd_site_styles_user_can_manage() ) {
 		wp_die( esc_html__( 'You do not have permission to change these settings.', 'csd-site-styles' ), 403 );
 	}
 	check_admin_referer( 'csd_site_styles_clear' );
@@ -235,7 +248,7 @@ add_action( 'admin_post_csd_site_styles_clear', 'csd_site_styles_handle_clear' )
  * Show the page.
  */
 function csd_site_styles_render_page() {
-	if ( ! current_user_can( 'manage_options' ) ) {
+	if ( ! csd_site_styles_user_can_manage() ) {
 		wp_die( esc_html__( 'You do not have permission to open this page.', 'csd-site-styles' ), 403 );
 	}
 

@@ -3,7 +3,7 @@ Tags: block styles, block patterns, custom css, gutenberg
 Requires at least: 6.9
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,7 +47,7 @@ The settings page lists what failed. The most common causes are a less-than sign
 
 = Does it work on multisite? =
 
-The CSS is stored in one option for each site, so each site saves its own. Uninstalling removes the option from every site. The settings page needs the `manage_options` capability.
+The CSS is stored in one option for each site, so each site saves its own. Uninstalling removes the option from every site. The settings page needs the `manage_options` capability. On a multisite network it also needs `edit_css`, the capability core's Additional CSS asks for, so only super admins can save CSS there.
 
 = What does it store? =
 
@@ -67,6 +67,11 @@ Download `csd-site-styles-<version>.zip` from the Releases page of https://githu
 
 == Changelog ==
 
+= 1.5.2 =
+* On a multisite network, saving or clearing CSS now also needs the edit_css capability (as core's Additional CSS does), so only super admins can do it. A single site is unchanged.
+* A CSS file field posted as an array is refused with the usual message instead of a PHP warning.
+* Uninstalling on a network visits the sites in pages of 100.
+
 = 1.5.1 =
 * New block styles: CSD Photo band and CSD Photo tile (Cover block) and CSD Icon badge (Image block), and two patterns: photo band and three photo tiles. They show in the gallery with a placeholder image.
 * The editor labels of the Light and Dark band styles are now Plain band and Accent band. Class names are unchanged.
@@ -78,6 +83,9 @@ Download `csd-site-styles-<version>.zip` from the Releases page of https://githu
 * Removed the stylesheets, the tokens file and the font loader.
 
 == Upgrade Notice ==
+
+= 1.5.2 =
+On a multisite network only super admins can save CSS from now on. A single site is unchanged.
 
 = 1.5.1 =
 Adds photo band, photo tile and icon badge styles and two patterns. They carry no styling; add rules for them to your saved CSS. The editor labels of the Light and Dark band styles now read Plain band and Accent band; the class names are unchanged, so existing pages are not affected.
