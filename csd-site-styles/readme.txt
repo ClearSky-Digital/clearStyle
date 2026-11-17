@@ -1,7 +1,8 @@
 === CSD Site Styles ===
+Contributors: clearskydigital
 Tags: block styles, block patterns, custom css, gutenberg
 Requires at least: 6.9
-Tested up to: 6.9
+Tested up to: 7.1
 Requires PHP: 7.4
 Stable tag: 1.5.2
 License: GPL-2.0-or-later
@@ -69,6 +70,7 @@ Download `csd-site-styles-<version>.zip` from the Releases page of https://githu
 
 = 1.5.2 =
 * On a multisite network, saving or clearing CSS now also needs the edit_css capability (as core's Additional CSS does), so only super admins can do it. A single site is unchanged.
+* On multisite the Settings menu item shows only to people who can use the page.
 * A CSS file field posted as an array is refused with the usual message instead of a PHP warning.
 * Uninstalling on a network visits the sites in pages of 100.
 

@@ -65,10 +65,14 @@ function csd_site_styles_user_can_manage() {
  * Add the page under Settings.
  */
 function csd_site_styles_add_menu() {
+	// Only people who can use the page see the menu item: a role with edit_css alone on multisite would otherwise open it and get a 403.
+	if ( ! csd_site_styles_user_can_manage() ) {
+		return;
+	}
 	add_options_page(
 		__( 'CSD Site Styles', 'csd-site-styles' ),
 		__( 'CSD Site Styles', 'csd-site-styles' ),
-		is_multisite() ? 'edit_css' : 'manage_options',
+		'manage_options',
 		'csd-site-styles',
 		'csd_site_styles_render_page'
 	);

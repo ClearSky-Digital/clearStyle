@@ -6,6 +6,7 @@ All notable changes to CSD Site Styles are listed here. The format follows [Keep
 
 ### Changed
 - On a multisite network, saving, clearing and viewing the settings page also need the `edit_css` capability (as core's Additional CSS does), on top of `manage_options`. Only super admins hold it there. A single site is unchanged.
+- On multisite the Settings menu item shows only to people who can use the page (`manage_options` and `edit_css`), so a role with `edit_css` alone no longer sees a menu item that ends in a 403.
 - A `csd_css_file` field posted as an array is refused with the usual "did not upload" or extension message and raises no PHP warning.
 - Uninstall on a network visits the sites in pages of 100 instead of loading them all at once.
 
